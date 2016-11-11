@@ -1,2 +1,5 @@
+This project is not ready for use.
+
 # smartypants.js
-SmartyPants.pl js port
+SmartyPants.pl JS port
+
