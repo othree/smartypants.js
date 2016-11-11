@@ -76,3 +76,39 @@ var smartypants = (text:string = '', attr:string|number = "1"):string => {
   }
 
 }
+
+type token = [string, string];
+/**
+ * @param str String containing HTML markup.
+ * @param return Reference to an array of the tokens comprising the input string. Each token is either a tag (possibly with nested, tags contained therein, such as <a href="<MTFoo>">, or a run of text between tags. Each element of the array is a two-element array; the first is either 'tag' or 'text'; the second is the actual value.
+ *
+ * Based on the _tokenize() subroutine from Brad Choate's MTRegex plugin.
+ *     <http://www.bradchoate.com/past/mtregex.php>
+ */
+var _tokenize = (str:string):Array<token> => {
+  var pos = 0;
+  var len = str.length;
+  var tokens = [];
+
+  var match = new RegExp(/<!--[\s\S]*?-->|<\?.*?\?>|<[^>]*>/g);
+
+  var matched = null;
+
+  while (matched = match.exec(str)) {
+    if (pos < matched.index) {
+      let t:token = ['text', str.substring(pos, matched.index)];
+      tokens.push(t);
+    }
+    let t:token = ['tag', matched.toString()];
+    tokens.push(t);
+
+    pos = match.lastIndex;
+  }
+  if (pos < len) {
+    let t:token = ['text', str.substring(pos, len)];
+    tokens.push(t);
+  }
+
+  return tokens;
+};
+
