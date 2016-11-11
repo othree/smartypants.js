@@ -98,8 +98,39 @@ var smartypants = (text:string = '', attr:string|number = "1"):string => {
 }
 
 /**
- * @param str String containing HTML markup.
- * @param return Reference to an array of the tokens comprising the input string. Each token is either a tag (possibly with nested, tags contained therein, such as <a href="<MTFoo>">, or a run of text between tags. Each element of the array is a two-element array; the first is either 'tag' or 'text'; the second is the actual value.
+ * @param {string} str String 
+ * @return {string} string, with after processing the following backslash
+ *                  escape sequences. This is useful if you want to force a "dumb"
+ *                  quote or other character to appear.
+ *
+ *                  Escape  Value
+ *                  ------  -----
+ *                  \\      &#92;
+ *                  \"      &#34;
+ *                  \'      &#39;
+ *                  \.      &#46;
+ *                  \-      &#45;
+ *                  \`      &#96;
+ *
+ */
+var ProcessEscapes = (str:string):string => {
+  str = str.replace(/\\\\/g, '&#92;');
+  str = str.replace(/\\"/g, '&#34;');
+  str = str.replace(/\\'/g, '&#39;');
+  str = str.replace(/\\\./g, '&#46;');
+  str = str.replace(/\\-/g, '&#45;');
+  str = str.replace(/\\`/g, '&#96;');
+  return str;
+};
+
+/**
+ * @param {string} str String containing HTML markup.
+ * @return {Array<token>} Reference to an array of the tokens comprising the input
+ *                        string. Each token is either a tag (possibly with nested,
+ *                        tags contained therein, such as <a href="<MTFoo>">, or a
+ *                        run of text between tags. Each element of the array is a
+ *                        two-element array; the first is either 'tag' or 'text'; 
+ *                        the second is the actual value.
  *
  * Based on the _tokenize() subroutine from Brad Choate's MTRegex plugin.
  *     <http://www.bradchoate.com/past/mtregex.php>
