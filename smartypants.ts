@@ -1,3 +1,7 @@
+type token = [string, string];
+
+var tags_to_skip = /<(?:\/?)(?:pre|code|kbd|script|math)[^>]*>/i;
+
 /**
  * @param text text to be parsed
  * @param attr value of the smart_quotes="" attribute
@@ -75,9 +79,24 @@ var smartypants = (text:string = '', attr:string|number = "1"):string => {
     }
   }
 
+  var tokens:Array<token> = _tokenize(text);
+  var result:string = '';
+  /**
+   * Keep track of when we're inside <pre> or <code> tags.
+   */
+  var in_pre:number = 0;
+  /**
+   * This is a cheat, used to get some context
+   * for one-character tokens that consist of 
+   * just a quote char. What we do is remember
+   * the last character of the previous text
+   * token, to use as context to curl single-
+   * character quote tokens correctly.
+   */
+  var prev_token_last_char:string = '';
+
 }
 
-type token = [string, string];
 /**
  * @param str String containing HTML markup.
  * @param return Reference to an array of the tokens comprising the input string. Each token is either a tag (possibly with nested, tags contained therein, such as <a href="<MTFoo>">, or a run of text between tags. Each element of the array is a two-element array; the first is either 'tag' or 'text'; the second is the actual value.
@@ -90,7 +109,7 @@ var _tokenize = (str:string):Array<token> => {
   var len = str.length;
   var tokens = [];
 
-  var match = new RegExp(/<!--[\s\S]*?-->|<\?.*?\?>|<[^>]*>/g);
+  var match = /<!--[\s\S]*?-->|<\?.*?\?>|<[^>]*>/g;
 
   var matched = null;
 
