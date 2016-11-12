@@ -113,6 +113,20 @@ var EducateBackticks = (str:string):string => {
 
 /**
  * @param {string} str String 
+ * @return {string} The string, with `backticks' -style single quotes
+ *                  translated into HTML curly quote entities.
+ *
+ * Example input:  `Isn't this fun?'
+ * Example output: &#8216;Isn&#8217;t this fun?&#8217;
+ */
+var EducateSingleBackticks = (str:string):string => {
+  str = str.replace(/`/g, '&#8216;');
+  str = str.replace(/'/g, '&#8217;');
+  return str;
+};
+
+/**
+ * @param {string} str String 
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
  *                  quote or other character to appear.
