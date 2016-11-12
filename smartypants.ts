@@ -149,6 +149,25 @@ var EducateDashesOldSchool = (str:string):string => {
 
 /**
  * @param {string} str String 
+ * @return {string} The string, with each instance of "--" translated to
+ *                  an em-dash HTML entity, and each "---" translated to
+ *                  an en-dash HTML entity. Two reasons why: First, unlike the
+ *                  en- and em-dash syntax supported by
+ *                  EducateDashesOldSchool(), it's compatible with existing
+ *                  entries written before SmartyPants 1.1, back when "--" was
+ *                  only used for em-dashes.  Second, em-dashes are more
+ *                  common than en-dashes, and so it sort of makes sense that
+ *                  the shortcut should be shorter to type. (Thanks to Aaron
+ *                  Swartz for the idea.)
+ */
+var EducateDashesOldSchoolInverted = (str:string):string => {
+  str = str.replace(/---/g, '&#8211;');
+  str = str.replace(/--/g, '&#8212;');
+  return str;
+};
+
+/**
+ * @param {string} str String 
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
  *                  quote or other character to appear.
