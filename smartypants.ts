@@ -1,6 +1,6 @@
 type token = [string, string];
 
-var tags_to_skip = /<(?:\/?)(?:pre|code|kbd|script|math)[^>]*>/i;
+var tags_to_skip = /<(\/?)(?:pre|code|kbd|script|math)[^>]*>/i;
 
 /**
  * @param text text to be parsed
@@ -95,6 +95,83 @@ var smartypants = (text:string = '', attr:string|number = "1"):string => {
    */
   var prev_token_last_char:string = '';
 
+  for (let i = 0; i < tokens.length; i++) {
+    let cur_token = tokens[i];
+    if (cur_token[0] === 'tag') {
+      result = result + cur_token[1];
+      let matched = tags_to_skip.exec(cur_token[1]);
+      if (matched) {
+        if (matched[1] === '/') {
+          in_pre = 0;
+        } else {
+          in_pre = 1;
+        }
+      }
+    } else {
+      let t = cur_token[1];
+      let last_char = t.substring(t.length - 1, t.length); // Remember last char of this token before processing.
+      if (!in_pre) {
+        t = ProcessEscapes(t);
+        
+        if (convert_quot) {
+          t = t.replace(/$quot;/g, '"');
+        }
+
+        if (do_dashes) {
+          if (do_dashes === 1) {
+            t = EducateDashes(t);
+          }
+          if (do_dashes === 2) {
+            t = EducateDashesOldSchool(t);
+          }
+          if (do_dashes === 3) {
+            t = EducateDashesOldSchoolInverted(t);
+          }
+        }
+
+        if (do_ellipses) {
+          t = EducateEllipses(t);
+        }
+
+        // Note: backticks need to be processed before quotes.
+        if (do_backticks) {
+          t = EducateBackticks(t);
+          if (do_backticks === 2) {
+            t = EducateSingleBackticks(t);
+          }
+        }
+
+        if (do_quotes) {
+          if (t === '\'') {
+            // Special case: single-character ' token
+            if (/\S/.test(prev_token_last_char)) {
+              t = '&#8217;';
+            } else {
+              t = '&#8216;';
+            }
+          } else if (t === '"') {
+            // Special case: single-character " token
+            if (/\S/.test(prev_token_last_char)) {
+              t = '&#8221;';
+            } else {
+              t = '&#8220;';
+            }
+          } else {
+            // Normal case:
+            // t = EducateQuotes(t);
+          }
+        }
+
+        if (do_stupefy) {
+          t = StupefyEntities(t);
+        }
+      }
+      prev_token_last_char = last_char;
+      result = result + t;
+    }
+  }
+
+  return result;
 }
 
 /**
