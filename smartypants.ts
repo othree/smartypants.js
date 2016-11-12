@@ -127,6 +127,28 @@ var EducateSingleBackticks = (str:string):string => {
 
 /**
  * @param {string} str String 
+ * @return {string} The string, with each instance of "--" translated to
+ *                  an em-dash HTML entity.
+ */
+var EducateDashes = (str:string):string => {
+  str = str.replace(/--/g, '&#8212;');
+  return str;
+};
+
+/**
+ * @param {string} str String 
+ * @return {string} The string, with each instance of "--" translated to
+ *                  an en-dash HTML entity, and each "---" translated to
+ *                  an em-dash HTML entity.
+ */
+var EducateDashesOldSchool = (str:string):string => {
+  str = str.replace(/---/g, '&#8212;');
+  str = str.replace(/--/g, '&#8211;');
+  return str;
+};
+
+/**
+ * @param {string} str String 
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
  *                  quote or other character to appear.
