@@ -99,6 +99,20 @@ var smartypants = (text:string = '', attr:string|number = "1"):string => {
 
 /**
  * @param {string} str String 
+ * @return {string} The string, with ``backticks'' -style double quotes
+ *                  translated into HTML curly quote entities.
+ *     
+ * Example input:  ``Isn't this fun?''
+ * Example output: &#8220;Isn't this fun?&#8221;
+ */
+var EducateBackticks = (str:string):string => {
+  str = str.replace(/``/g, '&#8220;');
+  str = str.replace(/''/g, '&#8221;');
+  return str;
+};
+
+/**
+ * @param {string} str String 
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
  *                  quote or other character to appear.
