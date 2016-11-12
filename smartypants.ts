@@ -168,6 +168,21 @@ var EducateDashesOldSchoolInverted = (str:string):string => {
 
 /**
  * @param {string} str String 
+ * @return {string} The string, with each instance of "..." translated to
+ *                  an ellipsis HTML entity. Also converts the case where
+ *                  there are spaces between the dots.
+ *    
+ * Example input:  Huh...?
+ * Example output: Huh&#8230;?
+ */
+var EducateEllipses= (str:string):string => {
+  str = str.replace(/\.\.\./g, '&#8230;');
+  str = str.replace(/\. \. \./g, '&#8230;');
+  return str;
+};
+
+/**
+ * @param {string} str String 
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
  *                  quote or other character to appear.
