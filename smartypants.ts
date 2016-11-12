@@ -183,6 +183,29 @@ var EducateEllipses= (str:string):string => {
 
 /**
  * @param {string} str String 
+ * @return {string} The string, with each SmartyPants HTML entity translated to
+ *                  its ASCII counterpart.
+ *
+ * Example input:  &#8220;Hello &#8212; world.&#8221;
+ * Example output: "Hello -- world."
+ */
+var StupefyEntities = (str:string):string => {
+  str = str.replace(/&#8211;/g, '-');   // en-dash
+  str = str.replace(/&#8212;/g, '--');  // em-dash
+
+  str = str.replace(/&#8216;/g, '\'');  // open single quote
+  str = str.replace(/&#8217;/g, '\'');  // close single quote
+  
+  str = str.replace(/&#8220;/g, '"');   // open double quote
+  str = str.replace(/&#8221;/g, '"');   // close double quote
+  
+  str = str.replace(/&#8230;/g, '...'); // ellipsis
+
+  return str;
+};
+
+/**
+ * @param {string} str String 
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
  *                  quote or other character to appear.
