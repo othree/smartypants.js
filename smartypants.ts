@@ -158,7 +158,7 @@ var smartypants = (text:string = '', attr:string|number = "1"):string => {
             }
           } else {
             // Normal case:
-            // t = EducateQuotes(t);
+            t = EducateQuotes(t);
           }
         }
 
@@ -209,6 +209,8 @@ var EducateQuotes = (str:string):string => {
    */
   str = str.replace(/'(?=\d\d)/, '&#8217;');
 
+  var close_class = '[^\ \t\r\n\[\{\(\-]';
+  var dec_dashes = '&#8211;|&#8212;'
   /**
    * Get most opening single quotes:
    * s {
@@ -224,7 +226,61 @@ var EducateQuotes = (str:string):string => {
    *     (?=\w)              # followed by a word character
    * } {$1&#8216;}xg;
    */
-  // str = str.replace(/()/g, '\$1&#8216;');
+  str = str.replace(new RegExp(`(\s|&nbsp;|--|&[mn]dash;|${dec_dashes}|&#x201[34])'(?=\w)`, 'g'), '\$1&#8216;');
+
+  /**
+   * Single closing quotes:
+   * s {
+   *     ($close_class)?
+   *     '
+   *     (?(1)|          # If $1 captured, then do nothing;
+   *       (?=\s | s\b)  # otherwise, positive lookahead for a whitespace
+   *     )               # char or an 's' at a word ending position. This
+   *                     # is a special case to handle something like:
+   *                     # "<i>Custer</i>'s Last Stand."
+   * } {$1&#8217;}xgi;
+   */
+  str = str.replace(new RegExp(`(${close_class})'`, 'g'), '\$1&#8217;');
+  str = str.replace(new RegExp(`'(?(1)|(?=\s|s\b))`, 'g'), '\$1&#8217;');
+
+  /**
+   * Any remaining single quotes should be opening ones:
+   */
+  str = str.replace(/'/g, '&#8216;');
+
+  /**
+   * Get most opening double quotes:
+   * s {
+   *     (
+   *         \s          |   # a whitespace char, or
+   *         &nbsp;      |   # a non-breaking space entity, or
+   *         --          |   # dashes, or
+   *         &[mn]dash;  |   # named dash entities
+   *         $dec_dashes |   # or decimal entities
+   *         &\#x201[34];    # or hex
+   *     )
+   *     "                   # the quote
+   *     (?=\w)              # followed by a word character
+   * } {$1&#8220;}xg;
+   */
+  str = str.replace(new RegExp(`(\s|&nbsp;|--|&[mn]dash;|${dec_dashes}|&#x201[34])"(?=\w)`, 'g'), '\$1&#8220;');
+
+  /**
+   * Double closing quotes:
+   * s {
+   *     ($close_class)?
+   *     "
+   *     (?(1)|(?=\s))   # If $1 captured, then do nothing;
+   *                        # if not, then make sure the next char is whitespace.
+   * } {$1&#8221;}xg;
+   */
+  str = str.replace(new RegExp(`(${close_class})"`, 'g'), '\$1&#8221;');
+  str = str.replace(new RegExp(`'(?(1)|(?=\s))`, 'g'), '\$1&#8221;');
+
+  /**
+   * Any remaining quotes should be opening ones.
+   */
+  str = str.replace(/"/g, '&#8220;');
 
   return str;
 }
