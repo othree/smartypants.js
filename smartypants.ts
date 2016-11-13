@@ -176,6 +176,61 @@ var smartypants = (text:string = '', attr:string|number = "1"):string => {
 
 /**
  * @param {string} str String 
+ * @return {string} The string, with "educated" curly quote HTML entities.
+ *
+ * Example input:  "Isn't this fun?"
+ * Example output: &#8220;Isn&#8217;t this fun?&#8221;
+ */
+var EducateQuotes = (str:string):string => {
+  /**
+   * Make our own "punctuation" character class, because the POSIX-style
+   * [:PUNCT:] is only available in Perl 5.6 or later:
+   *
+   * JavaScript don't have punctuation class neither.
+   */
+  var punct_class = '[!"#\$\%\'()*+,-./:;<=>?\@\[\\\]\^_`{|}~]';
+
+  /**
+   * Special case if the very first character is a quote
+   * followed by punctuation at a non-word-break. Close the quotes by brute force:
+   */
+  str = str.replace(new RegExp(`^'(?=${punct_class}\\B)?`), '&#8217;');
+  str = str.replace(new RegExp(`^"(?=${punct_class}\\B)?`), '&#8221;');
+
+  /**
+   * Special case for double sets of quotes, e.g.:
+   *   <p>He said, "'Quoted' words in a larger quote."</p>
+   */
+  str = str.replace(/"'(?=\w)/, '&#8220;&#8216;');
+  str = str.replace(/'"(?=\w)/, '&#8216;&#8220;');
+
+  /**
+   * Special case for decade abbreviations (the '80s):
+   */
+  str = str.replace(/'(?=\d\d)/, '&#8217;');
+
+  /**
+   * Get most opening single quotes:
+   * s {
+   *     (
+   *         \s          |   # a whitespace char, or
+   *         &nbsp;      |   # a non-breaking space entity, or
+   *         --          |   # dashes, or
+   *         &[mn]dash;  |   # named dash entities
+   *         $dec_dashes |   # or decimal entities
+   *         &\#x201[34];    # or hex
+   *     )
+   *     '                   # the quote
+   *     (?=\w)              # followed by a word character
+   * } {$1&#8216;}xg;
+   */
+  // str = str.replace(/()/g, '\$1&#8216;');
+
+  return str;
+}
+
+/**
+ * @param {string} str String 
  * @return {string} The string, with ``backticks'' -style double quotes
  *                  translated into HTML curly quote entities.
  *     
