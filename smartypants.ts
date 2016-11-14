@@ -6,7 +6,7 @@ var tags_to_skip = /<(\/?)(?:pre|code|kbd|script|math)[^>]*>/i;
  * @param text text to be parsed
  * @param attr value of the smart_quotes="" attribute
  */
-var smartypants = (text:string = '', attr:string|number = "1"):string => {
+var SmartyPants = (text:string = '', attr:string|number = "1"):string => {
 
   var do_quotes:number;
   var do_backticks:number;
