@@ -1,7 +1,7 @@
 {
   "name": "smartypants",
   "version": "0.0.1",
-  "main": "smartpants.js",
+  "main": "smartypants.js",
   "repository": {
     "url": "git@github.com:othree/smartypants.js.git",
     "type": "git"
@@ -9,6 +9,6 @@
   "author": "othree <othree@gmail.com>",
   "license": "BSD-3-Clause",
   "files": [
-    "smartpants.js"
+    "smartypants.js"
   ]
 }
