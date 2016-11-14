@@ -108,8 +108,8 @@ var SmartyPants = (text:string = '', attr:string|number = "1"):string => {
         }
       }
     } else {
-      let t = cur_token[1];
-      let last_char = t.substring(t.length - 1, t.length); // Remember last char of this token before processing.
+      let t:string = cur_token[1];
+      let last_char:string = t.substring(t.length - 1, t.length); // Remember last char of this token before processing.
       if (!in_pre) {
         t = ProcessEscapes(t);
         
