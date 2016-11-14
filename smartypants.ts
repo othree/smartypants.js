@@ -556,3 +556,7 @@ var _tokenize = (str:string):Array<token> => {
   return tokens;
 };
 
+export { SmartyPants as smartypants };
+export { SmartQuotes as smartquotes };
+export default SmartyPants;
+
