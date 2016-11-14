@@ -174,6 +174,105 @@ var SmartyPants = (text:string = '', attr:string|number = "1"):string => {
   return result;
 }
 
+var SmartQuotes = (text:string = '', attr:string|number = "1"):string => {
+
+  /**
+   * should we educate ``backticks'' -style quotes?
+   */
+  var do_backticks:number;
+
+  if (typeof attr === 'number') {
+    attr = attr.toString();
+  }
+
+  if (attr === "0") {
+    // Do nothing
+    return text;
+  }
+  else if (attr === "2") {
+    // smarten ``backticks'' -style quotes
+    do_backticks = 1;
+  }
+  else {
+    do_backticks = 0;
+  }
+  
+  /**
+   * Special case to handle quotes at the very end of $text when preceded by
+   * an HTML tag. Add a space to give the quote education algorithm a bit of
+   * context, so that it can guess correctly that it's a closing quote:
+   */
+  var add_extra_space:number = 0;
+  if (/>['"]$/.test(text)) {
+    add_extra_space = 1; // Remember, so we can trim the extra space later.
+    text = text + " ";
+  }
+
+  var tokens:Array<token> = _tokenize(text);
+  var result:string = '';
+  
+  /**
+   * Keep track of when we're inside <pre> or <code> tags.
+   */
+  var in_pre:number = 0;
+  /**
+   * This is a cheat, used to get some context
+   * for one-character tokens that consist of 
+   * just a quote char. What we do is remember
+   * the last character of the previous text
+   * token, to use as context to curl single-
+   * character quote tokens correctly.
+   */
+  var prev_token_last_char:string = '';
+  
+  for (let i = 0; i < tokens.length; i++) {
+    let cur_token = tokens[i];
+    if (cur_token[0] === 'tag') {
+      result = result + cur_token[1];
+      let matched = tags_to_skip.exec(cur_token[1]);
+      if (matched) {
+        if (matched[1] === '/') {
+          in_pre = 0;
+        } else {
+          in_pre = 1;
+        }
+      }
+    } else {
+      let t:string = cur_token[1];
+      let last_char:string = t.substring(t.length - 1, t.length); // Remember last char of this token before processing.
+      if (!in_pre) {
+        t = ProcessEscapes(t);
+
+        if (t === '\'') {
+          // Special case: single-character ' token
+          if (/\S/.test(prev_token_last_char)) {
+            t = '&#8217;';
+          } else {
+            t = '&#8216;';
+          }
+        } else if (t === '"') {
+          // Special case: single-character " token
+          if (/\S/.test(prev_token_last_char)) {
+            t = '&#8221;';
+          } else {
+            t = '&#8220;';
+          }
+        } else {
+          // Normal case:
+          t = EducateQuotes(t);
+        }
+      }
+      prev_token_last_char = last_char;
+      result = result + t;
+    }
+  }
+
+  if (add_extra_space) {
+    result = result.replace(/ $/, '');
+  }
+  return result;
+}
+
 /**
  * @param {string} str String 
  * @return {string} The string, with "educated" curly quote HTML entities.
