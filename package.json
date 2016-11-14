@@ -1,6 +1,6 @@
 {
   "name": "smartypants",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "smartypants.js",
   "repository": {
     "url": "git@github.com:othree/smartypants.js.git",
