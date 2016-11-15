@@ -273,6 +273,60 @@ var SmartQuotes = (text:string = '', attr:string|number = "1"):string => {
   return result;
 }
 
+var SmartDashes = (text:string = '', attr:string|number = "1"):string => {
+  // reference to the subroutine to use for dash education, default to EducateDashes:
+  var dash_sub_ref = EducateDashes;
+
+  if (typeof attr === 'number') {
+    attr = attr.toString();
+  }
+
+  if (attr === "0") {
+    // Do nothing
+    return text;
+  }
+  else if (attr === "2") {
+    // use old smart dash shortcuts, "--" for en, "---" for em
+    dash_sub_ref = EducateDashesOldSchool;
+  }
+  else if (attr === "3") {
+    // inverse of 2, "--" for em, "---" for en
+    dash_sub_ref = EducateDashesOldSchoolInverted;
+  }
+
+  var tokens:Array<token> = _tokenize(text);
+  var result:string = '';
+  
+  /**
+   * Keep track of when we're inside <pre> or <code> tags.
+   */
+  var in_pre:number = 0;
+
+  for (let i = 0; i < tokens.length; i++) {
+    let cur_token = tokens[i];
+    if (cur_token[0] === 'tag') {
+      result = result + cur_token[1];
+      let matched = tags_to_skip.exec(cur_token[1]);
+      if (matched) {
+        if (matched[1] === '/') {
+          in_pre = 0;
+        } else {
+          in_pre = 1;
+        }
+      }
+    } else {
+      let t:string = cur_token[1];
+      if (!in_pre) {
+        t = ProcessEscapes(t);
+        t = dash_sub_ref(t);
+      }
+      result = result + t;
+    }
+  }
+
+  return result;
+}
+
 /**
  * @param {string} str String 
  * @return {string} The string, with "educated" curly quote HTML entities.
@@ -558,5 +612,6 @@ var _tokenize = (str:string):Array<token> => {
 
 export { SmartyPants as smartypants };
 export { SmartQuotes as smartquotes };
+export { SmartDashes as smartdashes };
 export default SmartyPants;
 
