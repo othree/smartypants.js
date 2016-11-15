@@ -1,3 +1,6 @@
+all : smartypants.js smartypants.es6.js
+.PHONY : all
+
 smartypants.js: smartypants.es6.js
 	tsc smartypants.ts
 	sed -i.bak 's/exports\["default"\]/exports.default/g' smartypants.js
