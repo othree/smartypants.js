@@ -2,6 +2,7 @@
   "name": "smartypants",
   "version": "0.0.2",
   "main": "smartypants.js",
+  "jsnext:main": "smartypants.es6.js",
   "repository": {
     "url": "git@github.com:othree/smartypants.js.git",
     "type": "git"
@@ -9,7 +10,8 @@
   "author": "othree <othree@gmail.com>",
   "license": "BSD-3-Clause",
   "files": [
-    "smartypants.js"
+    "smartypants.js",
+    "smartypants.es6.js"
   ],
   "bin": {
     "smartypants": "./bin/smartypants.js"
