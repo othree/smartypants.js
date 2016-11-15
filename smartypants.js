@@ -281,6 +281,58 @@ var SmartQuotes = function (text, attr) {
     return result;
 };
 exports.smartquotes = SmartQuotes;
+var SmartDashes = function (text, attr) {
+    if (text === void 0) { text = ''; }
+    if (attr === void 0) { attr = "1"; }
+    // reference to the subroutine to use for dash education, default to EducateDashes:
+    var dash_sub_ref = EducateDashes;
+    if (typeof attr === 'number') {
+        attr = attr.toString();
+    }
+    if (attr === "0") {
+        // Do nothing
+        return text;
+    }
+    else if (attr === "2") {
+        // use old smart dash shortcuts, "--" for en, "---" for em
+        dash_sub_ref = EducateDashesOldSchool;
+    }
+    else if (attr === "3") {
+        // inverse of 2, "--" for em, "---" for en
+        dash_sub_ref = EducateDashesOldSchoolInverted;
+    }
+    var tokens = _tokenize(text);
+    var result = '';
+    /**
+     * Keep track of when we're inside <pre> or <code> tags.
+     */
+    var in_pre = 0;
+    for (var i = 0; i < tokens.length; i++) {
+        var cur_token = tokens[i];
+        if (cur_token[0] === 'tag') {
+            result = result + cur_token[1];
+            var matched = tags_to_skip.exec(cur_token[1]);
+            if (matched) {
+                if (matched[1] === '/') {
+                    in_pre = 0;
+                }
+                else {
+                    in_pre = 1;
+                }
+            }
+        }
+        else {
+            var t = cur_token[1];
+            if (!in_pre) {
+                t = ProcessEscapes(t);
+                t = dash_sub_ref(t);
+            }
+            result = result + t;
+        }
+    }
+    return result;
+};
+exports.smartdashes = SmartDashes;
 /**
  * @param {string} str String
  * @return {string} The string, with "educated" curly quote HTML entities.
@@ -536,4 +588,4 @@ var _tokenize = function (str) {
     return tokens;
 };
 exports.__esModule = true;
-exports["default"] = SmartyPants;
+exports.default = SmartyPants;
