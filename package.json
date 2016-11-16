@@ -11,7 +11,8 @@
   "license": "BSD-3-Clause",
   "files": [
     "smartypants.js",
-    "smartypants.es6.js"
+    "smartypants.es6.js",
+    "bin/smartypants.js"
   ],
   "bin": {
     "smartypants": "./bin/smartypants.js"
