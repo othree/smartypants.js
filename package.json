@@ -12,9 +12,11 @@
   "files": [
     "smartypants.js",
     "smartypants.es6.js",
-    "bin/smartypants.js"
+    "bin/smartypants.js",
+    "bin/smartypantsu.js"
   ],
   "bin": {
-    "smartypants": "./bin/smartypants.js"
+    "smartypants": "./bin/smartypants.js",
+    "smartypantsu": "./bin/smartypantsu.js"
   }
 }
