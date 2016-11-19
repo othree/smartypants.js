@@ -1,6 +1,11 @@
 SmartyPants
 ===========
 
+The following text about what is SmartyPants and how to use it are from
+original [SmartyPants.pl][] project.
+
+[SmartyPants.pl]:https://daringfireball.net/projects/smartypants/
+
 by John Gruber   
 <http://daringfireball.net/>
 
@@ -71,69 +76,50 @@ looks like:
     6'2" tall
 
 
-### Markdown and MT-Textile Integration ###
-
-Movable Type users should also note that SmartyPants can be used in
-conjunction with two text filtering plug-ins: [Markdown] [1] and Brad
-Choate's [MT-Textile] [2].
-
-    [1]: http://daringfireball.net/projects/markdown/
-    [2]: http://www.bradchoate.com/mt-plugins/textile
-
-Markdown is my text-to-HTML filter, and is intended to be an
-easy-to-write and easy-to-read structured text format for writing for
-the web. You write plain text; Markdown turns it into HTML. This readme
-file is formatted in Markdown.
-
-When Markdown and SmartyPants are both present in the same Movable Type
-installation, the "Markdown With SmartyPants" filter will be available
-from MT's Text Formatting pop-up menu. The "Markdown With SmartyPants"
-filter automatically applies SmartyPants to the bodies of your entries;
-the regular "Markdown" filter does not. See the Markdown web page for
-more details.
-
-MT-Textile is a port of Dean Allen's original [Textile] [3] project to
-Perl and Movable Type. MT-Textile by itself only translates Textile
-markup to HTML. However, if SmartyPants is also installed, MT-Textile
-will call on SmartyPants to educate quotes, dashes, and ellipses,
-automatically. Textile is Dean Allen's "humane web text generator",
-another easy-to-write and easy-to-read shorthand for web writing. An
-[online Textile web application] [3] is available at Mr. Allen's site.
-
-    [3]: http://textism.com/tools/textile/
-
-Using SmartyPants in conjunction with MT-Textile or the "Markdown With
-SmartyPants" filter requires no modifications to your Movable Type
-templates. You simply choose the appropriate filter from the Text
-Formatting menu, on a per-post basis. However, note that as of this
-writing, Movable Type does not apply text filters to article titles or
-excerpts; you'll need to edit your templates to get SmartyPants
-processing for those fields.
-
-You'll also need to invoke SmartyPants from your templates if you want
-to use non-default settings, such as en-dash support. For explicit
-control, I recommend using the regular "Markdown" text filter, and
-invoking SmartyPants from your templates.
-
-
 Installation
 ------------
 
-### Perl ###
+### Node ###
 
-SmartyPants works as a standalone Perl script. You can invoke it from a
-Unix-style command line, passing input as a file argument or as piped
-input via STDIN. See the POD documentation for information on the
-command-line switches SmartyPants accepts.
+Command line:
+
+    npm install -g smartypants
+
+Nodejs module:
+
+    npm install smartypants
+
+
+Usage
+-----
+
+### Command Line ###
+
+smartypants command line only support stdio now:
+
+    cat source.txt | smartypants
+
+
+### Node Module ###
+
+    var smartypants = require('smartypants');
+
+    var attr = 1; // Number or string
+    var sourceText = '"hello!"';
+
+    var educated = smartypants(sourceText, attr);
+
+In node module, smartypants provides several methods, orginal provided
+only in MT Tempalte:
+
+* default is smartypants
+* `smartquotes` only educates quotes
+* `smartdashes` only educates dashes
+* `smartellipses` only educates ellipses
 
 
 Options and Configuration
 -------------------------
-
-For MT users, the `smarty_pants` template tag attribute is where you
-specify configuration options. For Blosxom and BBEdit users, settings
-are specified by editing the value of the `$smartypants_attr` variable in
-the script itself.
 
 Numeric values are the easiest way to configure SmartyPants's behavior:
 
@@ -168,9 +154,7 @@ Numeric values are the easiest way to configure SmartyPants's behavior:
 The following single-character attribute values can be combined to
 toggle individual transformations from within the smarty_pants
 attribute. For example, to educate normal quotes and em-dashes, but not
-ellipses or backticks-style quotes:
-
-    <$MTFoo smarty_pants="qd"$>
+ellipses or backticks-style quotes: `qd`
 
 "q"
     Educates normal quote characters: (`"`) and (`'`).
@@ -212,11 +196,7 @@ ellipses or backticks-style quotes:
     `&quot;` entities into regular quotes so SmartyPants can educate
     them, you should pass the following to the smarty_pants attribute:
 
-        <$MTFoo smarty_pants="qDew"$>
-
-    For Blosxom and BBEdit users, set:
-
-        my $smartypants_attr = "qDew";
+        smartypants(sourceText, 'qDew');
 
 
 Caveats
@@ -272,18 +252,6 @@ proper HTML entity for closing single-quotes (`&#8217;` or `&rsquo;`) by
 hand.
 
 
-Bugs
-----
-
-To file bug reports or feature requests (other than topics listed in the
-Caveats section above) please send email to:
-
-    smartypants@daringfireball.net
-
-If the bug involves quotes being curled the wrong way, please send
-example text to illustrate.
-
-
 Version History
 ---------------
 
@@ -319,8 +287,9 @@ Copyright and License
 ---------------------
 
 Copyright (c) 2004 John Gruber   
-Copyright (c) 2016 Kao, Wei-Ko   
 (http://daringfireball.net/)   
+Copyright (c) 2016 Kao, Wei-Ko(othree)
+(https://blog.othree.net/)   
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
