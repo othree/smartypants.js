@@ -657,5 +657,6 @@ var _tokenize = (str:string):Array<token> => {
 export { SmartyPants as smartypants };
 export { SmartQuotes as smartquotes };
 export { SmartDashes as smartdashes };
+export { SmartEllipses as smartellipses };
 export default SmartyPants;
 
