@@ -323,6 +323,45 @@ var SmartDashes = (text = '', attr = "1") => {
     }
     return result;
 };
+var SmartEllipses = (text = '', attr = "1") => {
+    if (typeof attr === 'number') {
+        attr = attr.toString();
+    }
+    if (attr === "0") {
+        // Do nothing
+        return text;
+    }
+    var tokens = _tokenize(text);
+    var result = '';
+    /**
+     * Keep track of when we're inside <pre> or <code> tags.
+     */
+    var in_pre = 0;
+    for (let i = 0; i < tokens.length; i++) {
+        let cur_token = tokens[i];
+        if (cur_token[0] === 'tag') {
+            result = result + cur_token[1];
+            let matched = tags_to_skip.exec(cur_token[1]);
+            if (matched) {
+                if (matched[1] === '/') {
+                    in_pre = 0;
+                }
+                else {
+                    in_pre = 1;
+                }
+            }
+        }
+        else {
+            let t = cur_token[1];
+            if (!in_pre) {
+                t = ProcessEscapes(t);
+                t = EducateEllipses(t);
+            }
+            result = result + t;
+        }
+    }
+    return result;
+};
 /**
  * @param {string} str String
  * @return {string} The string, with "educated" curly quote HTML entities.
@@ -342,8 +381,8 @@ var EducateQuotes = (str) => {
      * Special case if the very first character is a quote
      * followed by punctuation at a non-word-break. Close the quotes by brute force:
      */
-    str = str.replace(new RegExp(`^'(?=${punct_class}\\B)?`), '&#8217;');
-    str = str.replace(new RegExp(`^"(?=${punct_class}\\B)?`), '&#8221;');
+    str = str.replace(new RegExp(`^'(?=${punct_class}\B)`), '&#8217;');
+    str = str.replace(new RegExp(`^"(?=${punct_class}\B)`), '&#8221;');
     /**
      * Special case for double sets of quotes, e.g.:
      *   <p>He said, "'Quoted' words in a larger quote."</p>
@@ -521,6 +560,24 @@ var StupefyEntities = (str) => {
 };
 /**
  * @param {string} str String
+ * @return {string} The string, with each SmartyPants HTML entity translated to
+ *                  UTF-8 characters.
+ *
+ * Example input:  “Hello &#8217; world.”
+ * Example output: "Hello — world."
+ */
+var EducateEntities = (str) => {
+    str = str.replace(/&#8216;/g, '\u2018'); // en-dash
+    str = str.replace(/&#8217;/g, '\u2019'); // em-dash
+    str = str.replace(/&#8220;/g, '\u201c'); // open single quote
+    str = str.replace(/&#8221;/g, '\u201d'); // close single quote
+    str = str.replace(/&#8211;/g, '\u2013'); // open double quote
+    str = str.replace(/&#8212;/g, '\u2014'); // close double quote
+    str = str.replace(/&#8230;/g, '\u2026'); // ellipsis
+    return str;
+};
+/**
+ * @param {string} str String
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
  *                  quote or other character to appear.
@@ -577,7 +634,13 @@ var _tokenize = (str) => {
     }
     return tokens;
 };
+var smartypantsu = (text = '', attr = "1") => {
+    var str = SmartyPants(text, attr);
+    return EducateEntities(str);
+};
 export { SmartyPants as smartypants };
 export { SmartQuotes as smartquotes };
 export { SmartDashes as smartdashes };
+export { SmartEllipses as smartellipses };
+export { smartypantsu as smartypantsu };
 export default SmartyPants;
