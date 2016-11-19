@@ -288,7 +288,7 @@ Copyright and License
 
 Copyright (c) 2004 John Gruber   
 (http://daringfireball.net/)   
-Copyright (c) 2016 Kao, Wei-Ko(othree)
+Copyright (c) 2016 Kao, Wei-Ko(othree)   
 (https://blog.othree.net/)   
 All rights reserved.
 
