@@ -391,8 +391,8 @@ var EducateQuotes = (str:string):string => {
    * Special case if the very first character is a quote
    * followed by punctuation at a non-word-break. Close the quotes by brute force:
    */
-  str = str.replace(new RegExp(`^'(?=${punct_class}\\B)?`), '&#8217;');
-  str = str.replace(new RegExp(`^"(?=${punct_class}\\B)?`), '&#8221;');
+  str = str.replace(new RegExp(`^'(?=${punct_class}\B)`), '&#8217;');
+  str = str.replace(new RegExp(`^"(?=${punct_class}\B)`), '&#8221;');
 
   /**
    * Special case for double sets of quotes, e.g.:
