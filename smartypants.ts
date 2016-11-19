@@ -590,6 +590,29 @@ var StupefyEntities = (str:string):string => {
 };
 
 /**
+ * @param {string} str String
+ * @return {string} The string, with each SmartyPants HTML entity translated to
+ *                  UTF-8 characters.
+ *
+ * Example input:  “Hello &#8217; world.”
+ * Example output: "Hello — world."
+ */
+var EducateEntities = (str:string):string => {
+    str = str.replace(/&#8216;/g, '\u2018'); // en-dash
+    str = str.replace(/&#8217;/g, '\u2019'); // em-dash
+
+    str = str.replace(/&#8220;/g, '\u201c'); // open single quote
+    str = str.replace(/&#8221;/g, '\u201d'); // close single quote
+
+    str = str.replace(/&#8211;/g, '\u2013'); // open double quote
+    str = str.replace(/&#8212;/g, '\u2014'); // close double quote
+
+    str = str.replace(/&#8230;/g, '\u2026'); // ellipsis
+
+    return str;
+};
+
+/**
  * @param {string} str String 
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
@@ -654,9 +677,14 @@ var _tokenize = (str:string):Array<token> => {
   return tokens;
 };
 
+var smartypantsu = (text:string = '', attr:string|number = "1"):string => {
+  var str:string = SmartyPants(text, attr);
+  return EducateEntities(str);
+};
+
 export { SmartyPants as smartypants };
 export { SmartQuotes as smartquotes };
 export { SmartDashes as smartdashes };
 export { SmartEllipses as smartellipses };
+export { smartypantsu as smartypantsu };
 export default SmartyPants;
-
