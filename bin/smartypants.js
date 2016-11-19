@@ -1,5 +1,10 @@
 #! /usr/bin/env node
 
+if (process.stdin.isTTY) {
+  console.error('No input!');
+  process.exit(1);
+}
+
 var smartypants = require('..').smartypants;
 
 var text = '';
