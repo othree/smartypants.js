@@ -99,6 +99,9 @@ smartypants command line only support stdio now:
 
     cat source.txt | smartypants
 
+There is another command `smartypantsu` return UTF-8 character instead of HTML entity.
+
+    cat source.txt | smartypants
 
 ### Node Module ###
 
@@ -113,6 +116,8 @@ In node module, smartypants provides several methods, orginal provided
 only in MT Tempalte:
 
 * default is smartypants
+* `smartypants` educates everything
+* `smartypantsu` educates everything, return UTF-8 characters instead of HTML entity
 * `smartquotes` only educates quotes
 * `smartdashes` only educates dashes
 * `smartellipses` only educates ellipses
