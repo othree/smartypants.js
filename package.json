@@ -1,6 +1,6 @@
 {
   "name": "smartypants",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "smartypants.js",
   "jsnext:main": "smartypants.es6.js",
   "repository": {
