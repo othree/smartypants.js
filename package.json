@@ -3,6 +3,13 @@
   "version": "0.0.3",
   "main": "smartypants.js",
   "jsnext:main": "smartypants.es6.js",
+  "keywords": [
+    "smartypants",
+    "typographic",
+    "quote",
+    "dash",
+    "ellipses"
+  ],
   "repository": {
     "url": "git@github.com:othree/smartypants.js.git",
     "type": "git"
