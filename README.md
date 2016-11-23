@@ -11,9 +11,11 @@ by John Gruber
 
 
 SmartyPants is a free web publishing plug-in for Movable Type, Blosxom,
-and BBEdit that easily translates plain ASCII punctuation characters
+and BBEdit. that easily translates plain ASCII punctuation characters
 into "smart" typographic punctuation HTML entities. SmartyPants can also
-be invoked as a standalone Perl script.
+be invoked as a standalone Perl script. smartypants.js is JavaScript 
+version of Smartypants.pl. Provides the translate feature and supports
+output UTF-8 character instead of HTML entity.
 
 SmartyPants can perform the following transformations:
 
@@ -30,12 +32,6 @@ This means you can write, edit, and save your posts using plain old
 ASCII straight quotes, plain dashes, and plain dots, but your published
 posts (and final HTML output) will appear with smart quotes, em-dashes,
 and proper ellipses.
-
-SmartyPants is a combination plug-in -- the same file works with Movable
-Type, Blosxom, and BBEdit. It can also be used from a Unix-style
-command-line. Version requirements and installation instructions for
-each of these tools can be found in the corresponding sub-section under
-"Installation", below.
 
 SmartyPants does not modify characters within `<pre>`, `<code>`,
 `<kbd>`, or `<script>` tag blocks. Typically, these tags are used to
