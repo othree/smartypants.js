@@ -6,15 +6,15 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD
-        define('SmartyPants', ['exports'], function (exports, b) {
-            factory((root.SmartyPants = exports), b);
+        define('SmartyPants', ['exports'], function (exports) {
+            factory((root.SmartyPants = exports));
         });
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
         factory(exports);
     } else {
         // Browser globals
-        factory((root.SmartyPants = {}), root.b);
+        factory((root.SmartyPants = {}));
     }
 }(this, function (exports) {
 
