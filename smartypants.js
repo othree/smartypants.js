@@ -684,7 +684,7 @@ var smartypantsu = function (text, attr) {
 };
 exports.smartypantsu = smartypantsu;
 exports.__esModule = true;
-exports.default = SmartyPants;
+exports["default"] = SmartyPants;
 
 
 }));
