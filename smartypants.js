@@ -10,6 +10,7 @@
  * Copyright (c) 2003-2004 John Gruber
  * Copyright (c) 2016      Kao, Wei-Ko(othree)
  *
+ * @see {@link https://www.npmjs.com/package/smartypants|smartypants.js}
  */
 
 (function (root, factory) {
