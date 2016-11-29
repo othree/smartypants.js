@@ -1,5 +1,8 @@
-all : smartypants.js smartypants.es6.js
+all : dist/smartypants.min.js smartypants.js smartypants.es6.js 
 .PHONY : all
+
+dist/smartypants.min.js: smartypants.js
+	uglifyjs smartypants.js > dist/smartypants.min.js
 
 smartypants.js: smartypants.es6.js template.js
 	tsc smartypants.ts
