@@ -1,5 +1,4 @@
-SmartyPants
-===========
+# SmartyPants
 
 The following text about what is SmartyPants and how to use it are from
 original [SmartyPants.pl][] project.
@@ -72,8 +71,7 @@ looks like:
     6'2" tall
 
 
-Installation
-------------
+## Installation
 
 ### Node ###
 
@@ -86,8 +84,7 @@ Nodejs module:
     npm install smartypants
 
 
-Usage
------
+## Usage
 
 ### Command Line ###
 
@@ -119,8 +116,7 @@ only in MT Tempalte:
 * `smartellipses` only educates ellipses
 
 
-Options and Configuration
--------------------------
+## Options and Configuration
 
 Numeric values are the easiest way to configure SmartyPants's behavior:
 
@@ -200,8 +196,7 @@ ellipses or backticks-style quotes: `qd`
         smartypants(sourceText, 'qDew');
 
 
-Caveats
--------
+## Caveats
 
 ### Why You Might Not Want to Use Smart Quotes in Your Weblog ###
 
@@ -253,26 +248,22 @@ proper HTML entity for closing single-quotes (`&#8217;` or `&rsquo;`) by
 hand.
 
 
-Version History
----------------
+## Version History
 
 
-Author
-------
+## Author
 
 John Gruber
 http://daringfireball.net
 
 
-JavaScript Port Maintainer
-------
+## JavaScript Port Maintainer
 
 Kao, Wei-Ko(othree)
 https://blog.othree.net
 
 
-Additional Credits
-------------------
+## Additional Credits
 
 Portions of this plug-in are based on Brad Choate's nifty MTRegex
 plug-in. Brad Choate also contributed a few bits of source code to this
@@ -284,8 +275,7 @@ Jeremy Hedley (http://antipixel.com/) and Charles Wiltgen
 Rael Dornfest (http://raelity.org/) ported SmartyPants to Blosxom.
 
 
-Copyright and License
----------------------
+## Copyright and License
 
 Copyright (c) 2004 John Gruber   
 (http://daringfireball.net/)   
