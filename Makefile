@@ -2,15 +2,13 @@ all : dist/smartypants.min.js smartypants.js smartypants.es6.js
 .PHONY : all
 
 dist/smartypants.min.js: smartypants.js
-	uglifyjs smartypants.js --comments '/^!/' > dist/smartypants.min.js
+	uglifyjs smartypants.js --comments '/^!/' --support-ie8 > dist/smartypants.min.js
 
 smartypants.js: smartypants.es6.js template.js
-	tsc smartypants.ts
-	mv smartypants.js smartypants.src.js
-	cat template.js | perl -pe 's/\/\/\ \@CODE/`cat smartypants.src.js`/ge' > smartypants.js
-	rm smartypants.src.js
+	tsc smartypants.ts; mv smartypants.js smartypants.src.js
+	cat template.js | perl -pe 's/^\/\/\ \@CODE/`cat smartypants.src.js`/ge' > smartypants.indent.js; rm smartypants.src.js
+	cat smartypants.indent.js | unexpand -t 4 --first-only | expand -t 2 > smartypants.js; rm smartypants.indent.js
 
 smartypants.es6.js: smartypants.ts
-	tsc smartypants.ts --target es6
-	mv smartypants.js smartypants.es6.js
+	tsc smartypants.ts --target es6; mv smartypants.js smartypants.es6.js
 
