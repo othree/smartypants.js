@@ -10,5 +10,6 @@ smartypants.js: smartypants.es6.js template.js
 	cat smartypants.indent.js | unexpand -t 4 --first-only | expand -t 2 > smartypants.js; rm smartypants.indent.js
 
 smartypants.es6.js: smartypants.ts
-	tsc smartypants.ts --target es6; mv smartypants.js smartypants.es6.js
+	tsc smartypants.ts --target es6; 
+	cat smartypants.js | unexpand -t 4 --first-only | expand -t 2 > smartypants.es6.js; rm smartypants.js
 
