@@ -781,7 +781,7 @@ var smartypantsu = (text:string = '', attr:string|number = '1'):string => {
   if (attr === '-1') {
     return EducateEntities(str, attr);
   } else {
-    return StupifyUTF8Char(str, attr);
+    return StupifyUTF8Char(str);
   }
 };
 
