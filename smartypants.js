@@ -38,7 +38,7 @@
    */
   var SmartyPants = function (text, attr) {
     if (text === void 0) { text = ''; }
-    if (attr === void 0) { attr = "1"; }
+    if (attr === void 0) { attr = '1'; }
     var do_quotes;
     var do_backticks;
     var do_dashes;
@@ -47,6 +47,9 @@
     var convert_quot = 0;
     if (typeof attr === 'number') {
       attr = attr.toString();
+    }
+    else {
+      attr = attr.replace(/\s/g, '');
     }
     /**
      * Parse attributes:
@@ -64,32 +67,32 @@
      * e : ellipses
      * w : convert &quot; entities to " for Dreamweaver users
     */
-    if (attr === "0") {
+    if (attr === '0') {
       // Do nothing
       return text;
     }
-    else if (attr === "1") {
+    else if (attr === '1') {
       // Do everything, turn all options on.
       do_quotes = 1;
       do_backticks = 1;
       do_dashes = 1;
       do_ellipses = 1;
     }
-    else if (attr === "2") {
+    else if (attr === '2') {
       // Do everything, turn all options on, use old school dash shorthand.
       do_quotes = 1;
       do_backticks = 1;
       do_dashes = 3;
       do_ellipses = 1;
     }
-    else if (attr === "3") {
+    else if (attr === '3') {
       // Do everything, turn all options on, use inverted old school dash shorthand.
       do_quotes = 1;
       do_backticks = 1;
       do_dashes = 3;
       do_ellipses = 1;
     }
-    else if (attr === "-1") {
+    else if (attr === '-1') {
       // Special "stupefy" mode.
       do_stupefy = 1;
     }
@@ -217,7 +220,7 @@
   exports.smartypants = SmartyPants;
   var SmartQuotes = function (text, attr) {
     if (text === void 0) { text = ''; }
-    if (attr === void 0) { attr = "1"; }
+    if (attr === void 0) { attr = '1'; }
     /**
      * should we educate ``backticks'' -style quotes?
      */
@@ -225,11 +228,14 @@
     if (typeof attr === 'number') {
       attr = attr.toString();
     }
-    if (attr === "0") {
+    else {
+      attr = attr.replace(/\s/g, '');
+    }
+    if (attr === '0') {
       // Do nothing
       return text;
     }
-    else if (attr === "2") {
+    else if (attr === '2') {
       // smarten ``backticks'' -style quotes
       do_backticks = 1;
     }
@@ -244,7 +250,7 @@
     var add_extra_space = 0;
     if (/>['"]$/.test(text)) {
       add_extra_space = 1; // Remember, so we can trim the extra space later.
-      text = text + " ";
+      text = text + ' ';
     }
     var tokens = _tokenize(text);
     var result = '';
@@ -315,21 +321,24 @@
   exports.smartquotes = SmartQuotes;
   var SmartDashes = function (text, attr) {
     if (text === void 0) { text = ''; }
-    if (attr === void 0) { attr = "1"; }
+    if (attr === void 0) { attr = '1'; }
     // reference to the subroutine to use for dash education, default to EducateDashes:
     var dash_sub_ref = EducateDashes;
     if (typeof attr === 'number') {
       attr = attr.toString();
     }
-    if (attr === "0") {
+    else {
+      attr = attr.replace(/\s/g, '');
+    }
+    if (attr === '0') {
       // Do nothing
       return text;
     }
-    else if (attr === "2") {
+    else if (attr === '2') {
       // use old smart dash shortcuts, "--" for en, "---" for em
       dash_sub_ref = EducateDashesOldSchool;
     }
-    else if (attr === "3") {
+    else if (attr === '3') {
       // inverse of 2, "--" for em, "---" for en
       dash_sub_ref = EducateDashesOldSchoolInverted;
     }
@@ -367,11 +376,14 @@
   exports.smartdashes = SmartDashes;
   var SmartEllipses = function (text, attr) {
     if (text === void 0) { text = ''; }
-    if (attr === void 0) { attr = "1"; }
+    if (attr === void 0) { attr = '1'; }
     if (typeof attr === 'number') {
       attr = attr.toString();
     }
-    if (attr === "0") {
+    else {
+      attr = attr.replace(/\s/g, '');
+    }
+    if (attr === '0') {
       // Do nothing
       return text;
     }
@@ -611,14 +623,105 @@
    * Example input:  “Hello &#8217; world.”
    * Example output: "Hello — world."
    */
-  var EducateEntities = function (str) {
-    str = str.replace(/&#8216;/g, '\u2018'); // en-dash
-    str = str.replace(/&#8217;/g, '\u2019'); // em-dash
-    str = str.replace(/&#8220;/g, '\u201c'); // open single quote
-    str = str.replace(/&#8221;/g, '\u201d'); // close single quote
-    str = str.replace(/&#8211;/g, '\u2013'); // open double quote
-    str = str.replace(/&#8212;/g, '\u2014'); // close double quote
-    str = str.replace(/&#8230;/g, '\u2026'); // ellipsis
+  var EducateEntities = function (text, attr) {
+    if (attr === void 0) { attr = '1'; }
+    var do_quotes;
+    var do_backticks;
+    var do_dashes;
+    var do_ellipses;
+    var do_stupefy;
+    if (typeof attr === 'number') {
+      attr = attr.toString();
+    }
+    else {
+      attr = attr.replace(/\s/g, '');
+    }
+    if (attr === '0') {
+      // Do nothing
+      return text;
+    }
+    else if (attr === '1') {
+      // Do everything, turn all options on.
+      do_quotes = 1;
+      do_backticks = 1;
+      do_dashes = 1;
+      do_ellipses = 1;
+    }
+    else if (attr === '2') {
+      // Do everything, turn all options on, use old school dash shorthand.
+      do_quotes = 1;
+      do_backticks = 1;
+      do_dashes = 3;
+      do_ellipses = 1;
+    }
+    else if (attr === '3') {
+      // Do everything, turn all options on, use inverted old school dash shorthand.
+      do_quotes = 1;
+      do_backticks = 1;
+      do_dashes = 3;
+      do_ellipses = 1;
+    }
+    else if (attr === '-1') {
+      // Special "stupefy" mode.
+      do_stupefy = 1;
+    }
+    else {
+      for (var i = 0; i < attr.length; i++) {
+        var c = attr[i];
+        if (c === 'q') {
+          do_quotes = 1;
+        }
+        if (c === 'b') {
+          do_backticks = 1;
+        }
+        if (c === 'B') {
+          do_backticks = 2;
+        }
+        if (c === 'd') {
+          do_dashes = 1;
+        }
+        if (c === 'D') {
+          do_dashes = 2;
+        }
+        if (c === 'i') {
+          do_dashes = 3;
+        }
+        if (c === 'e') {
+          do_ellipses = 1;
+        }
+      }
+    }
+    if (do_dashes) {
+      text = text.replace(/&#8216;/g, '\u2018'); // en-dash
+      text = text.replace(/&#8217;/g, '\u2019'); // em-dash
+    }
+    if (do_quotes || do_backticks) {
+      text = text.replace(/&#8220;/g, '\u201c'); // open single quote
+      text = text.replace(/&#8221;/g, '\u201d'); // close single quote
+      text = text.replace(/&#8211;/g, '\u2013'); // open double quote
+      text = text.replace(/&#8212;/g, '\u2014'); // close double quote
+    }
+    if (do_ellipses) {
+      text = text.replace(/&#8230;/g, '\u2026'); // ellipsis
+    }
+    return text;
+  };
+  /**
+   * @param {string} str String
+   * @return {string} The string, with each SmartyPants UTF-8 chars translated to
+   *                  its ASCII counterpart.
+   *
+   * Example input:  &#8220;Hello &#8212; world.&#8221;
+   * Example output: "Hello -- world."
+   */
+  var StupifyUTF8Char = function (str) {
+    str = str.replace(/\u2018/g, '-'); // en-dash
+    str = str.replace(/\u2019;/g, '--'); // em-dash
+    str = str.replace(/\u201c/g, '\''); // open single quote
+    str = str.replace(/\u201d/g, '\''); // close single quote
+    str = str.replace(/\u2013/g, '"'); // open double quote
+    str = str.replace(/\u2014/g, '"'); // close double quote
+    str = str.replace(/\u2026/g, '...'); // ellipsis
     return str;
   };
   /**
@@ -681,9 +784,20 @@
   };
   var smartypantsu = function (text, attr) {
     if (text === void 0) { text = ''; }
-    if (attr === void 0) { attr = "1"; }
+    if (attr === void 0) { attr = '1'; }
     var str = SmartyPants(text, attr);
-    return EducateEntities(str);
+    if (typeof attr === 'number') {
+      attr = attr.toString();
+    }
+    else {
+      attr = attr.replace(/\s/g, '');
+    }
+    if (attr === '-1') {
+      return EducateEntities(str, attr);
+    }
+    else {
+      return StupifyUTF8Char(str);
+    }
   };
   exports.smartypantsu = smartypantsu;
   exports.__esModule = true;
