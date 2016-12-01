@@ -689,7 +689,7 @@ var EducateEntities = (text:string, attr:string|number = "1"):string => {
  * Example input:  &#8220;Hello &#8212; world.&#8221;
  * Example output: "Hello -- world."
  */
-var StupefyEntities = (str:string):string => {
+var StupifyUTF8Char = (str:string):string => {
   str = str.replace(/\u2018/g, '-');   // en-dash
   str = str.replace(/\u2019;/g, '--');  // em-dash
 
