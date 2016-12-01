@@ -6,7 +6,7 @@ var tags_to_skip = /<(\/?)(?:pre|code|kbd|script|math)[^>]*>/i;
  * @param text text to be parsed
  * @param attr value of the smart_quotes="" attribute
  */
-var SmartyPants = (text:string = '', attr:string|number = "1"):string => {
+var SmartyPants = (text:string = '', attr:string|number = '1'):string => {
 
   var do_quotes:number;
   var do_backticks:number;
@@ -38,32 +38,32 @@ var SmartyPants = (text:string = '', attr:string|number = "1"):string => {
  * w : convert &quot; entities to " for Dreamweaver users
 */
 
-  if (attr === "0") {
+  if (attr === '0') {
     // Do nothing
     return text;
   }
-  else if (attr === "1") {
+  else if (attr === '1') {
     // Do everything, turn all options on.
     do_quotes = 1;
     do_backticks = 1;
     do_dashes = 1;
     do_ellipses = 1;
   }
-  else if (attr === "2") {
+  else if (attr === '2') {
     // Do everything, turn all options on, use old school dash shorthand.
     do_quotes = 1;
     do_backticks = 1;
     do_dashes = 3;
     do_ellipses = 1;
   }
-  else if (attr === "3") {
+  else if (attr === '3') {
     // Do everything, turn all options on, use inverted old school dash shorthand.
     do_quotes = 1;
     do_backticks = 1;
     do_dashes = 3;
     do_ellipses = 1;
   }
-  else if (attr === "-1") {
+  else if (attr === '-1') {
     // Special "stupefy" mode.
     do_stupefy = 1;
   }
@@ -176,7 +176,7 @@ var SmartyPants = (text:string = '', attr:string|number = "1"):string => {
   return result;
 }
 
-var SmartQuotes = (text:string = '', attr:string|number = "1"):string => {
+var SmartQuotes = (text:string = '', attr:string|number = '1'):string => {
 
   /**
    * should we educate ``backticks'' -style quotes?
@@ -189,11 +189,11 @@ var SmartQuotes = (text:string = '', attr:string|number = "1"):string => {
     attr = attr.replace(/\s/g, '');
   }
 
-  if (attr === "0") {
+  if (attr === '0') {
     // Do nothing
     return text;
   }
-  else if (attr === "2") {
+  else if (attr === '2') {
     // smarten ``backticks'' -style quotes
     do_backticks = 1;
   }
@@ -209,7 +209,7 @@ var SmartQuotes = (text:string = '', attr:string|number = "1"):string => {
   var add_extra_space:number = 0;
   if (/>['"]$/.test(text)) {
     add_extra_space = 1; // Remember, so we can trim the extra space later.
-    text = text + " ";
+    text = text + ' ';
   }
 
   var tokens:Array<token> = _tokenize(text);
@@ -277,7 +277,7 @@ var SmartQuotes = (text:string = '', attr:string|number = "1"):string => {
   return result;
 }
 
-var SmartDashes = (text:string = '', attr:string|number = "1"):string => {
+var SmartDashes = (text:string = '', attr:string|number = '1'):string => {
   // reference to the subroutine to use for dash education, default to EducateDashes:
   var dash_sub_ref = EducateDashes;
 
@@ -287,15 +287,15 @@ var SmartDashes = (text:string = '', attr:string|number = "1"):string => {
     attr = attr.replace(/\s/g, '');
   }
 
-  if (attr === "0") {
+  if (attr === '0') {
     // Do nothing
     return text;
   }
-  else if (attr === "2") {
+  else if (attr === '2') {
     // use old smart dash shortcuts, "--" for en, "---" for em
     dash_sub_ref = EducateDashesOldSchool;
   }
-  else if (attr === "3") {
+  else if (attr === '3') {
     // inverse of 2, "--" for em, "---" for en
     dash_sub_ref = EducateDashesOldSchoolInverted;
   }
@@ -333,7 +333,7 @@ var SmartDashes = (text:string = '', attr:string|number = "1"):string => {
   return result;
 }
 
-var SmartEllipses = (text:string = '', attr:string|number = "1"):string => {
+var SmartEllipses = (text:string = '', attr:string|number = '1'):string => {
 
   if (typeof attr === 'number') {
     attr = attr.toString();
@@ -341,7 +341,7 @@ var SmartEllipses = (text:string = '', attr:string|number = "1"):string => {
     attr = attr.replace(/\s/g, '');
   }
 
-  if (attr === "0") {
+  if (attr === '0') {
     // Do nothing
     return text;
   }
@@ -605,7 +605,7 @@ var StupefyEntities = (str:string):string => {
  * Example input:  “Hello &#8217; world.”
  * Example output: "Hello — world."
  */
-var EducateEntities = (text:string, attr:string|number = "1"):string => {
+var EducateEntities = (text:string, attr:string|number = '1'):string => {
 
   var do_quotes:number;
   var do_backticks:number;
@@ -619,32 +619,32 @@ var EducateEntities = (text:string, attr:string|number = "1"):string => {
     attr = attr.replace(/\s/g, '');
   }
 
-  if (attr === "0") {
+  if (attr === '0') {
     // Do nothing
     return text;
   }
-  else if (attr === "1") {
+  else if (attr === '1') {
     // Do everything, turn all options on.
     do_quotes = 1;
     do_backticks = 1;
     do_dashes = 1;
     do_ellipses = 1;
   }
-  else if (attr === "2") {
+  else if (attr === '2') {
     // Do everything, turn all options on, use old school dash shorthand.
     do_quotes = 1;
     do_backticks = 1;
     do_dashes = 3;
     do_ellipses = 1;
   }
-  else if (attr === "3") {
+  else if (attr === '3') {
     // Do everything, turn all options on, use inverted old school dash shorthand.
     do_quotes = 1;
     do_backticks = 1;
     do_dashes = 3;
     do_ellipses = 1;
   }
-  else if (attr === "-1") {
+  else if (attr === '-1') {
     // Special "stupefy" mode.
     do_stupefy = 1;
   }
@@ -769,7 +769,7 @@ var _tokenize = (str:string):Array<token> => {
   return tokens;
 };
 
-var smartypantsu = (text:string = '', attr:string|number = "1"):string => {
+var smartypantsu = (text:string = '', attr:string|number = '1'):string => {
   var str:string = SmartyPants(text, attr);
 
   if (typeof attr === 'number') {
