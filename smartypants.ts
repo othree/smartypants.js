@@ -597,19 +597,78 @@ var StupefyEntities = (str:string):string => {
  * Example input:  “Hello &#8217; world.”
  * Example output: "Hello — world."
  */
-var EducateEntities = (str:string):string => {
-    str = str.replace(/&#8216;/g, '\u2018'); // en-dash
-    str = str.replace(/&#8217;/g, '\u2019'); // em-dash
+var EducateEntities = (text:string, attr:string|number = "1"):string => {
 
-    str = str.replace(/&#8220;/g, '\u201c'); // open single quote
-    str = str.replace(/&#8221;/g, '\u201d'); // close single quote
+  var do_quotes:number;
+  var do_backticks:number;
+  var do_dashes:number;
+  var do_ellipses:number;
+  var do_stupefy:number;
 
-    str = str.replace(/&#8211;/g, '\u2013'); // open double quote
-    str = str.replace(/&#8212;/g, '\u2014'); // close double quote
+  if (typeof attr === 'number') {
+    attr = attr.toString();
+  }
 
-    str = str.replace(/&#8230;/g, '\u2026'); // ellipsis
+  if (attr === "0") {
+    // Do nothing
+    return text;
+  }
+  else if (attr === "1") {
+    // Do everything, turn all options on.
+    do_quotes = 1;
+    do_backticks = 1;
+    do_dashes = 1;
+    do_ellipses = 1;
+  }
+  else if (attr === "2") {
+    // Do everything, turn all options on, use old school dash shorthand.
+    do_quotes = 1;
+    do_backticks = 1;
+    do_dashes = 3;
+    do_ellipses = 1;
+  }
+  else if (attr === "3") {
+    // Do everything, turn all options on, use inverted old school dash shorthand.
+    do_quotes = 1;
+    do_backticks = 1;
+    do_dashes = 3;
+    do_ellipses = 1;
+  }
+  else if (attr === "-1") {
+    // Special "stupefy" mode.
+    do_stupefy = 1;
+  }
+  else {
+    for (let i = 0; i < attr.length; i++) {
+      let c = attr[i];
+      if (c === 'q') { do_quotes = 1; }
+      if (c === 'b') { do_backticks = 1; }
+      if (c === 'B') { do_backticks = 2; }
+      if (c === 'd') { do_dashes = 1; }
+      if (c === 'D') { do_dashes = 2; }
+      if (c === 'i') { do_dashes = 3; }
+      if (c === 'e') { do_ellipses = 1; }
+    }
+  }
 
-    return str;
+  if (do_dashes) {
+    text = text.replace(/&#8216;/g, '\u2018'); // en-dash
+    text = text.replace(/&#8217;/g, '\u2019'); // em-dash
+  }
+
+  if (do_quotes || do_backticks) {
+    text = text.replace(/&#8220;/g, '\u201c'); // open single quote
+    text = text.replace(/&#8221;/g, '\u201d'); // close single quote
+
+    text = text.replace(/&#8211;/g, '\u2013'); // open double quote
+    text = text.replace(/&#8212;/g, '\u2014'); // close double quote
+  }
+
+  if (do_ellipses) {
+    text = text.replace(/&#8230;/g, '\u2026'); // ellipsis
+  }
+
+  return text;
 };
 
 /**
@@ -679,7 +738,7 @@ var _tokenize = (str:string):Array<token> => {
 
 var smartypantsu = (text:string = '', attr:string|number = "1"):string => {
   var str:string = SmartyPants(text, attr);
-  return EducateEntities(str);
+  return EducateEntities(str, attr);
 };
 
 export { SmartyPants as smartypants };
