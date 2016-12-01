@@ -17,6 +17,8 @@ var SmartyPants = (text:string = '', attr:string|number = "1"):string => {
 
   if (typeof attr === 'number') {
     attr = attr.toString();
+  } else {
+    attr = attr.replace(/\s/g, '');
   }
 
 /**
@@ -183,6 +185,8 @@ var SmartQuotes = (text:string = '', attr:string|number = "1"):string => {
 
   if (typeof attr === 'number') {
     attr = attr.toString();
+  } else {
+    attr = attr.replace(/\s/g, '');
   }
 
   if (attr === "0") {
@@ -279,6 +283,8 @@ var SmartDashes = (text:string = '', attr:string|number = "1"):string => {
 
   if (typeof attr === 'number') {
     attr = attr.toString();
+  } else {
+    attr = attr.replace(/\s/g, '');
   }
 
   if (attr === "0") {
@@ -331,6 +337,8 @@ var SmartEllipses = (text:string = '', attr:string|number = "1"):string => {
 
   if (typeof attr === 'number') {
     attr = attr.toString();
+  } else {
+    attr = attr.replace(/\s/g, '');
   }
 
   if (attr === "0") {
@@ -607,6 +615,8 @@ var EducateEntities = (text:string, attr:string|number = "1"):string => {
 
   if (typeof attr === 'number') {
     attr = attr.toString();
+  } else {
+    attr = attr.replace(/\s/g, '');
   }
 
   if (attr === "0") {
