@@ -683,6 +683,29 @@ var EducateEntities = (text:string, attr:string|number = "1"):string => {
 
 /**
  * @param {string} str String 
+ * @return {string} The string, with each SmartyPants UTF-8 chars translated to
+ *                  its ASCII counterpart.
+ *
+ * Example input:  &#8220;Hello &#8212; world.&#8221;
+ * Example output: "Hello -- world."
+ */
+var StupefyEntities = (str:string):string => {
+  str = str.replace(/\u2018/g, '-');   // en-dash
+  str = str.replace(/\u2019;/g, '--');  // em-dash
+
+  str = str.replace(/\u201c/g, '\'');  // open single quote
+  str = str.replace(/\u201d/g, '\'');  // close single quote
+  
+  str = str.replace(/\u2013/g, '"');   // open double quote
+  str = str.replace(/\u2014/g, '"');   // close double quote
+  
+  str = str.replace(/\u2026/g, '...'); // ellipsis
+
+  return str;
+};
+
+/**
+ * @param {string} str String 
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
  *                  quote or other character to appear.
@@ -748,7 +771,18 @@ var _tokenize = (str:string):Array<token> => {
 
 var smartypantsu = (text:string = '', attr:string|number = "1"):string => {
   var str:string = SmartyPants(text, attr);
-  return EducateEntities(str, attr);
+
+  if (typeof attr === 'number') {
+    attr = attr.toString();
+  } else {
+    attr = attr.replace(/\s/g, '');
+  }
+
+  if (attr === '-1') {
+    return EducateEntities(str, attr);
+  } else {
+    return StupifyUTF8Char(str, attr);
+  }
 };
 
 export { SmartyPants as smartypants };
