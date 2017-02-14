@@ -1,9 +1,9 @@
-var tags_to_skip = /<(\/?)(?:pre|code|kbd|script|math)[^>]*>/i;
+const tags_to_skip = /<(\/?)(?:pre|code|kbd|script|math)[^>]*>/i;
 /**
  * @param text text to be parsed
  * @param attr value of the smart_quotes="" attribute
  */
-var SmartyPants = (text = '', attr = '1') => {
+const SmartyPants = (text = '', attr = '1') => {
   var do_quotes;
   var do_backticks;
   var do_dashes;
@@ -182,7 +182,7 @@ var SmartyPants = (text = '', attr = '1') => {
   }
   return result;
 };
-var SmartQuotes = (text = '', attr = '1') => {
+const SmartQuotes = (text = '', attr = '1') => {
   /**
    * should we educate ``backticks'' -style quotes?
    */
@@ -280,7 +280,7 @@ var SmartQuotes = (text = '', attr = '1') => {
   }
   return result;
 };
-var SmartDashes = (text = '', attr = '1') => {
+const SmartDashes = (text = '', attr = '1') => {
   // reference to the subroutine to use for dash education, default to EducateDashes:
   var dash_sub_ref = EducateDashes;
   if (typeof attr === 'number') {
@@ -332,7 +332,7 @@ var SmartDashes = (text = '', attr = '1') => {
   }
   return result;
 };
-var SmartEllipses = (text = '', attr = '1') => {
+const SmartEllipses = (text = '', attr = '1') => {
   if (typeof attr === 'number') {
     attr = attr.toString();
   }
@@ -381,7 +381,7 @@ var SmartEllipses = (text = '', attr = '1') => {
  * Example input:  "Isn't this fun?"
  * Example output: &#8220;Isn&#8217;t this fun?&#8221;
  */
-var EducateQuotes = (str) => {
+const EducateQuotes = (str) => {
   /**
    * Make our own "punctuation" character class, because the POSIX-style
    * [:PUNCT:] is only available in Perl 5.6 or later:
@@ -482,7 +482,7 @@ var EducateQuotes = (str) => {
  * Example input:  ``Isn't this fun?''
  * Example output: &#8220;Isn't this fun?&#8221;
  */
-var EducateBackticks = (str) => {
+const EducateBackticks = (str) => {
   str = str.replace(/``/g, '&#8220;');
   str = str.replace(/''/g, '&#8221;');
   return str;
@@ -495,7 +495,7 @@ var EducateBackticks = (str) => {
  * Example input:  `Isn't this fun?'
  * Example output: &#8216;Isn&#8217;t this fun?&#8217;
  */
-var EducateSingleBackticks = (str) => {
+const EducateSingleBackticks = (str) => {
   str = str.replace(/`/g, '&#8216;');
   str = str.replace(/'/g, '&#8217;');
   return str;
@@ -505,7 +505,7 @@ var EducateSingleBackticks = (str) => {
  * @return {string} The string, with each instance of "--" translated to
  *                  an em-dash HTML entity.
  */
-var EducateDashes = (str) => {
+const EducateDashes = (str) => {
   str = str.replace(/--/g, '&#8212;');
   return str;
 };
@@ -515,7 +515,7 @@ var EducateDashes = (str) => {
  *                  an en-dash HTML entity, and each "---" translated to
  *                  an em-dash HTML entity.
  */
-var EducateDashesOldSchool = (str) => {
+const EducateDashesOldSchool = (str) => {
   str = str.replace(/---/g, '&#8212;');
   str = str.replace(/--/g, '&#8211;');
   return str;
@@ -533,7 +533,7 @@ var EducateDashesOldSchool = (str) => {
  *                  the shortcut should be shorter to type. (Thanks to Aaron
  *                  Swartz for the idea.)
  */
-var EducateDashesOldSchoolInverted = (str) => {
+const EducateDashesOldSchoolInverted = (str) => {
   str = str.replace(/---/g, '&#8211;');
   str = str.replace(/--/g, '&#8212;');
   return str;
@@ -547,7 +547,7 @@ var EducateDashesOldSchoolInverted = (str) => {
  * Example input:  Huh...?
  * Example output: Huh&#8230;?
  */
-var EducateEllipses = (str) => {
+const EducateEllipses = (str) => {
   str = str.replace(/\.\.\./g, '&#8230;');
   str = str.replace(/\. \. \./g, '&#8230;');
   return str;
@@ -560,7 +560,7 @@ var EducateEllipses = (str) => {
  * Example input:  &#8220;Hello &#8212; world.&#8221;
  * Example output: "Hello -- world."
  */
-var StupefyEntities = (str) => {
+const StupefyEntities = (str) => {
   str = str.replace(/&#8211;/g, '-'); // en-dash
   str = str.replace(/&#8212;/g, '--'); // em-dash
   str = str.replace(/&#8216;/g, '\''); // open single quote
@@ -578,7 +578,7 @@ var StupefyEntities = (str) => {
  * Example input:  “Hello &#8217; world.”
  * Example output: "Hello — world."
  */
-var EducateEntities = (text, attr = '1') => {
+const EducateEntities = (text, attr = '1') => {
   var do_quotes;
   var do_backticks;
   var do_dashes;
@@ -668,7 +668,7 @@ var EducateEntities = (text, attr = '1') => {
  * Example input:  &#8220;Hello &#8212; world.&#8221;
  * Example output: "Hello -- world."
  */
-var StupifyUTF8Char = (str) => {
+const StupifyUTF8Char = (str) => {
   str = str.replace(/\u2018/g, '-'); // en-dash
   str = str.replace(/\u2019;/g, '--'); // em-dash
   str = str.replace(/\u201c/g, '\''); // open single quote
@@ -694,7 +694,7 @@ var StupifyUTF8Char = (str) => {
  *                  \`      &#96;
  *
  */
-var ProcessEscapes = (str) => {
+const ProcessEscapes = (str) => {
   str = str.replace(/\\\\/g, '&#92;');
   str = str.replace(/\\"/g, '&#34;');
   str = str.replace(/\\'/g, '&#39;');
@@ -715,7 +715,7 @@ var ProcessEscapes = (str) => {
  * Based on the _tokenize() subroutine from Brad Choate's MTRegex plugin.
  *     <http://www.bradchoate.com/past/mtregex.php>
  */
-var _tokenize = (str) => {
+const _tokenize = (str) => {
   var pos = 0;
   var len = str.length;
   var tokens = [];
@@ -736,7 +736,7 @@ var _tokenize = (str) => {
   }
   return tokens;
 };
-var smartypantsu = (text = '', attr = '1') => {
+const smartypantsu = (text = '', attr = '1') => {
   var str = SmartyPants(text, attr);
   if (typeof attr === 'number') {
     attr = attr.toString();
