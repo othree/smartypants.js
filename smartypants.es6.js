@@ -745,10 +745,10 @@ const smartypantsu = (text = '', attr = '1') => {
     attr = attr.replace(/\s/g, '');
   }
   if (attr === '-1') {
-    return EducateEntities(str, attr);
+    return StupifyUTF8Char(str);
   }
   else {
-    return StupifyUTF8Char(str);
+    return EducateEntities(str, attr);
   }
 };
 export { SmartyPants as smartypants };
