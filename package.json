@@ -2,6 +2,7 @@
   "name": "smartypants",
   "version": "0.0.6",
   "main": "smartypants.js",
+  "module": "smartypants.es6.js",
   "jsnext:main": "smartypants.es6.js",
   "keywords": [
     "smartypants",
