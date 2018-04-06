@@ -31,6 +31,7 @@
 }(this, function (exports) {
 
   "use strict";
+  exports.__esModule = true;
   var tags_to_skip = /<(\/?)(?:pre|code|kbd|script|math)[^>]*>/i;
   /**
    * @param text text to be parsed
@@ -793,14 +794,13 @@
       attr = attr.replace(/\s/g, '');
     }
     if (attr === '-1') {
-      return EducateEntities(str, attr);
+      return StupifyUTF8Char(str);
     }
     else {
-      return StupifyUTF8Char(str);
+      return EducateEntities(str, attr);
     }
   };
   exports.smartypantsu = smartypantsu;
-  exports.__esModule = true;
   exports["default"] = SmartyPants;
 
 
