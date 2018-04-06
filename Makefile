@@ -16,3 +16,5 @@ smartypants.es6.js: smartypants.ts
 	cat smartypants.js | gunexpand -t 4 --first-only - | gexpand -t 2 - > smartypants.es6.js; rm smartypants.js
 	# cat smartypants.js | unexpand -t 4 --first-only | expand -t 2 > smartypants.es6.js; rm smartypants.js
 
+smartypants.mjs: smartypants.es6.js
+	cp smartypants.es6.js smartypants.mjs
