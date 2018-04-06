@@ -662,16 +662,16 @@ const EducateEntities = (text:string, attr:string|number = '1'):string => {
   }
 
   if (do_dashes) {
-    text = text.replace(/&#8216;/g, '\u2013'); // en-dash
-    text = text.replace(/&#8217;/g, '\u2014'); // em-dash
+    text = text.replace(/&#8211;/g, '\u2013'); // en-dash
+    text = text.replace(/&#8212;/g, '\u2014'); // em-dash
   }
 
   if (do_quotes || do_backticks) {
-    text = text.replace(/&#8220;/g, '\u201c'); // open single quote
-    text = text.replace(/&#8221;/g, '\u201d'); // close single quote
+    text = text.replace(/&#8216;/g, '\u2018'); // open single quote
+    text = text.replace(/&#8217;/g, '\u2019'); // close single quote
 
-    text = text.replace(/&#8211;/g, '\u2018'); // open double quote
-    text = text.replace(/&#8212;/g, '\u2019'); // close double quote
+    text = text.replace(/&#8220;/g, '\u201c'); // open double quote
+    text = text.replace(/&#8221;/g, '\u201d'); // close double quote
   }
 
   if (do_ellipses) {
@@ -692,12 +692,12 @@ const EducateEntities = (text:string, attr:string|number = '1'):string => {
 const StupifyUTF8Char = (str:string):string => {
   str = str.replace(/\u2013/g, '-');   // en-dash
   str = str.replace(/\u2014;/g, '--');  // em-dash
-
-  str = str.replace(/\u201c/g, '\'');  // open single quote
-  str = str.replace(/\u201d/g, '\'');  // close single quote
   
-  str = str.replace(/\u2018/g, '"');   // open double quote
-  str = str.replace(/\u2019/g, '"');   // close double quote
+  str = str.replace(/\u2018/g, '\'');   // open single quote
+  str = str.replace(/\u2019/g, '\'');   // close single quote
+
+  str = str.replace(/\u201c/g, '"');  // open double quote
+  str = str.replace(/\u201d/g, '"');  // close double quote
   
   str = str.replace(/\u2026/g, '...'); // ellipsis
 
