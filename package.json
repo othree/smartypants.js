@@ -4,6 +4,9 @@
   "main": "smartypants.js",
   "module": "smartypants.es6.js",
   "jsnext:main": "smartypants.es6.js",
+  "scripts": {
+    "test": "node --experimental-modules test/index.mjs"
+  },
   "keywords": [
     "smartypants",
     "typographic",
@@ -27,5 +30,8 @@
   "bin": {
     "smartypants": "./bin/smartypants.js",
     "smartypantsu": "./bin/smartypantsu.js"
+  },
+  "devDependencies": {
+    "tape": "^4.9.0"
   }
 }
