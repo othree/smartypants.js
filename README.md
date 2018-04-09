@@ -2,8 +2,8 @@
 
 Easily translates plain ASCII punctuation characters into "smart" typographic punctuation HTML entities.
 
-The following text about what is SmartyPants and how to use it are from
-original [SmartyPants.pl][] project.
+The following text about what is SmartyPants and how to use it is from
+the original [SmartyPants.pl][] project.
 
 [SmartyPants.pl]:https://daringfireball.net/projects/smartypants/
 
