@@ -32,6 +32,8 @@
     "smartypantsu": "./bin/smartypantsu.js"
   },
   "devDependencies": {
-    "tape": "^4.9.0"
+    "tape": "^4.9.0",
+    "typescript": "^2.8.1",
+    "uglify-js": "^3.3.20"
   }
 }
