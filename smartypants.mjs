@@ -670,7 +670,7 @@ const EducateEntities = (text, attr = '1') => {
  */
 const StupifyUTF8Char = (str) => {
   str = str.replace(/\u2013/g, '-'); // en-dash
-  str = str.replace(/\u2014;/g, '--'); // em-dash
+  str = str.replace(/\u2014/g, '--'); // em-dash
   str = str.replace(/\u2018/g, '\''); // open single quote
   str = str.replace(/\u2019/g, '\''); // close single quote
   str = str.replace(/\u201c/g, '"'); // open double quote
