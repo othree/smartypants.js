@@ -27,7 +27,7 @@ const SmartyPants = (text:string = '', attr:string|number = '1'):string => {
  * 1 : set all
  * 2 : set all, using old school en- and em- dash shortcuts
  * 3 : set all, using inverted old school en and em- dash shortcuts
- * 
+ *
  * q : quotes
  * b : backtick quotes (``double'' only)
  * B : backtick quotes (``double'' and `single')
@@ -53,7 +53,7 @@ const SmartyPants = (text:string = '', attr:string|number = '1'):string => {
     // Do everything, turn all options on, use old school dash shorthand.
     do_quotes = 1;
     do_backticks = 1;
-    do_dashes = 3;
+    do_dashes = 2;
     do_ellipses = 1;
   }
   else if (attr === '3') {
@@ -89,7 +89,7 @@ const SmartyPants = (text:string = '', attr:string|number = '1'):string => {
   var in_pre:number = 0;
   /**
    * This is a cheat, used to get some context
-   * for one-character tokens that consist of 
+   * for one-character tokens that consist of
    * just a quote char. What we do is remember
    * the last character of the previous text
    * token, to use as context to curl single-
@@ -114,7 +114,7 @@ const SmartyPants = (text:string = '', attr:string|number = '1'):string => {
       let last_char:string = t.substring(t.length - 1, t.length); // Remember last char of this token before processing.
       if (!in_pre) {
         t = ProcessEscapes(t);
-        
+
         if (convert_quot) {
           t = t.replace(/$quot;/g, '"');
         }
@@ -200,7 +200,7 @@ const SmartQuotes = (text:string = '', attr:string|number = '1'):string => {
   else {
     do_backticks = 0;
   }
-  
+
   /**
    * Special case to handle quotes at the very end of $text when preceded by
    * an HTML tag. Add a space to give the quote education algorithm a bit of
@@ -214,21 +214,21 @@ const SmartQuotes = (text:string = '', attr:string|number = '1'):string => {
 
   var tokens:Array<token> = _tokenize(text);
   var result:string = '';
-  
+
   /**
    * Keep track of when we're inside <pre> or <code> tags.
    */
   var in_pre:number = 0;
   /**
    * This is a cheat, used to get some context
-   * for one-character tokens that consist of 
+   * for one-character tokens that consist of
    * just a quote char. What we do is remember
    * the last character of the previous text
    * token, to use as context to curl single-
    * character quote tokens correctly.
    */
   var prev_token_last_char:string = '';
-  
+
   for (let i = 0; i < tokens.length; i++) {
     let cur_token = tokens[i];
     if (cur_token[0] === 'tag') {
@@ -302,7 +302,7 @@ const SmartDashes = (text:string = '', attr:string|number = '1'):string => {
 
   var tokens:Array<token> = _tokenize(text);
   var result:string = '';
-  
+
   /**
    * Keep track of when we're inside <pre> or <code> tags.
    */
@@ -348,7 +348,7 @@ const SmartEllipses = (text:string = '', attr:string|number = '1'):string => {
 
   var tokens:Array<token> = _tokenize(text);
   var result:string = '';
-  
+
   /**
    * Keep track of when we're inside <pre> or <code> tags.
    */
@@ -380,7 +380,7 @@ const SmartEllipses = (text:string = '', attr:string|number = '1'):string => {
 }
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} The string, with "educated" curly quote HTML entities.
  *
  * Example input:  "Isn't this fun?"
@@ -491,10 +491,10 @@ const EducateQuotes = (str:string):string => {
 }
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} The string, with ``backticks'' -style double quotes
  *                  translated into HTML curly quote entities.
- *     
+ *
  * Example input:  ``Isn't this fun?''
  * Example output: &#8220;Isn't this fun?&#8221;
  */
@@ -505,7 +505,7 @@ const EducateBackticks = (str:string):string => {
 };
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} The string, with `backticks' -style single quotes
  *                  translated into HTML curly quote entities.
  *
@@ -519,7 +519,7 @@ const EducateSingleBackticks = (str:string):string => {
 };
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} The string, with each instance of "--" translated to
  *                  an em-dash HTML entity.
  */
@@ -529,7 +529,7 @@ const EducateDashes = (str:string):string => {
 };
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} The string, with each instance of "--" translated to
  *                  an en-dash HTML entity, and each "---" translated to
  *                  an em-dash HTML entity.
@@ -541,7 +541,7 @@ const EducateDashesOldSchool = (str:string):string => {
 };
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} The string, with each instance of "--" translated to
  *                  an em-dash HTML entity, and each "---" translated to
  *                  an en-dash HTML entity. Two reasons why: First, unlike the
@@ -560,11 +560,11 @@ const EducateDashesOldSchoolInverted = (str:string):string => {
 };
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} The string, with each instance of "..." translated to
  *                  an ellipsis HTML entity. Also converts the case where
  *                  there are spaces between the dots.
- *    
+ *
  * Example input:  Huh...?
  * Example output: Huh&#8230;?
  */
@@ -575,7 +575,7 @@ const EducateEllipses= (str:string):string => {
 };
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} The string, with each SmartyPants HTML entity translated to
  *                  its ASCII counterpart.
  *
@@ -588,10 +588,10 @@ const StupefyEntities = (str:string):string => {
 
   str = str.replace(/&#8216;/g, '\'');  // open single quote
   str = str.replace(/&#8217;/g, '\'');  // close single quote
-  
+
   str = str.replace(/&#8220;/g, '"');   // open double quote
   str = str.replace(/&#8221;/g, '"');   // close double quote
-  
+
   str = str.replace(/&#8230;/g, '...'); // ellipsis
 
   return str;
@@ -682,7 +682,7 @@ const EducateEntities = (text:string, attr:string|number = '1'):string => {
 };
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} The string, with each SmartyPants UTF-8 chars translated to
  *                  its ASCII counterpart.
  *
@@ -692,20 +692,20 @@ const EducateEntities = (text:string, attr:string|number = '1'):string => {
 const StupifyUTF8Char = (str:string):string => {
   str = str.replace(/\u2013/g, '-');   // en-dash
   str = str.replace(/\u2014/g, '--');  // em-dash
-  
+
   str = str.replace(/\u2018/g, '\'');   // open single quote
   str = str.replace(/\u2019/g, '\'');   // close single quote
 
   str = str.replace(/\u201c/g, '"');  // open double quote
   str = str.replace(/\u201d/g, '"');  // close double quote
-  
+
   str = str.replace(/\u2026/g, '...'); // ellipsis
 
   return str;
 };
 
 /**
- * @param {string} str String 
+ * @param {string} str String
  * @return {string} string, with after processing the following backslash
  *                  escape sequences. This is useful if you want to force a "dumb"
  *                  quote or other character to appear.
@@ -736,7 +736,7 @@ const ProcessEscapes = (str:string):string => {
  *                        string. Each token is either a tag (possibly with nested,
  *                        tags contained therein, such as <a href="<MTFoo>">, or a
  *                        run of text between tags. Each element of the array is a
- *                        two-element array; the first is either 'tag' or 'text'; 
+ *                        two-element array; the first is either 'tag' or 'text';
  *                        the second is the actual value.
  *
  * Based on the _tokenize() subroutine from Brad Choate's MTRegex plugin.

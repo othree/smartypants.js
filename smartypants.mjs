@@ -47,7 +47,7 @@ const SmartyPants = (text = '', attr = '1') => {
     // Do everything, turn all options on, use old school dash shorthand.
     do_quotes = 1;
     do_backticks = 1;
-    do_dashes = 3;
+    do_dashes = 2;
     do_ellipses = 1;
   }
   else if (attr === '3') {
