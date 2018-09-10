@@ -1,0 +1,18 @@
+{
+  "parser": "babel-eslint",
+
+  "extends": "standard",
+
+  "plugins": [
+    "pep8-blank-lines"
+  ],
+
+  "rules": {
+    "camelcase": 0,
+    "semi": [2, "always"],
+    "no-extra-semi": 2,
+    "comma-dangle": ["error", "always-multiline"],
+    "no-multiple-empty-lines": 0,
+    "pep8-blank-lines/pep8-blank-lines": 2
+  }
+}
