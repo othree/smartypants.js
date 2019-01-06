@@ -105,7 +105,7 @@ There is another command `smartypantsu` return UTF-8 character instead of HTML e
     var attr = 1; // Number or string
     var sourceText = '"hello!"';
 
-    var educated = smartypants(sourceText, attr);
+    var educated = smartypants.smartypants(sourceText, attr);
 
 In node module, smartypants provides several methods, orginal provided
 only in MT Tempalte:
