@@ -1,5 +1,5 @@
 import test from 'tape';
-import { smartypants } from '../smartypants.mjs';
+import { smartypants } from '../';
 
 const LSQ = '&#8216;';
 const RSQ = '&#8217;';

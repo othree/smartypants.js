@@ -107,10 +107,24 @@ There is another command `smartypantsu` return UTF-8 character instead of HTML e
 
     var educated = smartypants.smartypants(sourceText, attr);
 
+### ES6 Module ###
+
+ES6 module only availabe in [pkg.module][] and [mjs][] extension.
+
+[pkg.module]:https://github.com/rollup/rollup/wiki/pkg.module
+[mjs]:https://nodejs.org/api/esm.html
+
+    import smartypants from 'smartypants';
+
+    var attr = 1; // Number or string
+    var sourceText = '"hello!"';
+
+    var educated = smartypants(sourceText, attr); // default export is available
+
 In node module, smartypants provides several methods, orginal provided
 only in MT Tempalte:
 
-* default is smartypants
+* default is smartypants (ES6 module only)
 * `smartypants` educates everything
 * `smartypantsu` educates everything, return UTF-8 characters instead of HTML entity
 * `smartquotes` only educates quotes

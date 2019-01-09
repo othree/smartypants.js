@@ -1,5 +1,5 @@
 import test from 'tape';
-import { smartypantsu } from '../smartypants.mjs';
+import { smartypantsu } from '../';
 
 const LSQ = '\u2018';
 const RSQ = '\u2019';
