@@ -18,7 +18,10 @@
     "url": "git@github.com:othree/smartypants.js.git",
     "type": "git"
   },
-  "author": "othree <othree@gmail.com>",
+  "author": {
+    "name": "othree",
+    "url": "https://github.com/othree"
+  },
   "license": "BSD-3-Clause",
   "files": [
     "smartypants.js",
