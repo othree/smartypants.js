@@ -482,7 +482,7 @@
      * } {$1&#8217;}xgi;
      */
     str = str.replace(new RegExp("(" + close_class + ")'", 'g'), '\$1&#8217;');
-    str = str.replace(new RegExp("'(?=s|s\b)", 'g'), '\$1&#8217;');
+    str = str.replace(new RegExp("'(?=s|s\b)", 'g'), '&#8217;');
     /**
      * Any remaining single quotes should be opening ones:
      */
@@ -513,7 +513,7 @@
      * } {$1&#8221;}xg;
      */
     str = str.replace(new RegExp("(" + close_class + ")\"", 'g'), '\$1&#8221;');
-    str = str.replace(new RegExp("'(?=s)", 'g'), '\$1&#8221;');
+    str = str.replace(new RegExp("'(?=s)", 'g'), '&#8221;');
     /**
      * Any remaining quotes should be opening ones.
      */
