@@ -32,6 +32,7 @@
 
   "use strict";
   exports.__esModule = true;
+  exports.smartypantsu = exports.smartellipses = exports.smartdashes = exports.smartquotes = exports.smartypants = void 0;
   var tags_to_skip = /<(\/?)(?:pre|code|kbd|script|math)[^>]*>/i;
   /**
    * @param text text to be parsed
@@ -67,7 +68,7 @@
      * i : inverted old school dashes
      * e : ellipses
      * w : convert &quot; entities to " for Dreamweaver users
-    */
+     */
     if (attr === '0') {
       // Do nothing
       return text;
@@ -220,12 +221,12 @@
   };
   exports.smartypants = SmartyPants;
   var SmartQuotes = function (text, attr) {
-    if (text === void 0) { text = ''; }
-    if (attr === void 0) { attr = '1'; }
     /**
      * should we educate ``backticks'' -style quotes?
      */
-    var do_backticks;
+    // var do_backticks:number;
+    if (text === void 0) { text = ''; }
+    if (attr === void 0) { attr = '1'; }
     if (typeof attr === 'number') {
       attr = attr.toString();
     }
@@ -235,13 +236,11 @@
     if (attr === '0') {
       // Do nothing
       return text;
-    }
-    else if (attr === '2') {
-      // smarten ``backticks'' -style quotes
-      do_backticks = 1;
-    }
-    else {
-      do_backticks = 0;
+      // } else if (attr === '2') {
+      //   // smarten ``backticks'' -style quotes
+      //   do_backticks = 1;
+      // } else {
+      //   do_backticks = 0;
     }
     /**
      * Special case to handle quotes at the very end of $text when preceded by
@@ -434,13 +433,13 @@
      *
      * JavaScript don't have punctuation class neither.
      */
-    var punct_class = '[!"#\$\%\'()*+,-./:;<=>?\@\[\\\]\^_`{|}~]';
+    var punct_class = '[!"#\$\%\'()*+,-./:;<=>?\@\[\\\]\^_`{|}~]'; // eslint-disable-line no-useless-escape
     /**
      * Special case if the very first character is a quote
      * followed by punctuation at a non-word-break. Close the quotes by brute force:
      */
-    str = str.replace(new RegExp("^'(?=" + punct_class + "B)"), '&#8217;');
-    str = str.replace(new RegExp("^\"(?=" + punct_class + "B)"), '&#8221;');
+    str = str.replace(new RegExp("^'(?=" + punct_class + "B)"), '&#8217;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("^\"(?=" + punct_class + "B)"), '&#8221;'); // eslint-disable-line no-useless-escape
     /**
      * Special case for double sets of quotes, e.g.:
      *   <p>He said, "'Quoted' words in a larger quote."</p>
@@ -451,7 +450,7 @@
      * Special case for decade abbreviations (the '80s):
      */
     str = str.replace(/'(?=\d\d)/, '&#8217;');
-    var close_class = '[^\ \t\r\n\[\{\(\-]';
+    var close_class = '[^\ \t\r\n\[\{\(\-]'; // eslint-disable-line no-useless-escape
     var dec_dashes = '&#8211;|&#8212;';
     /**
      * Get most opening single quotes:
@@ -468,7 +467,7 @@
      *     (?=\w)              # followed by a word character
      * } {$1&#8216;}xg;
      */
-    str = str.replace(new RegExp("(s|&nbsp;|--|&[mn]dash;|" + dec_dashes + "|&#x201[34])'(?=w)", 'g'), '\$1&#8216;');
+    str = str.replace(new RegExp("(s|&nbsp;|--|&[mn]dash;|" + dec_dashes + "|&#x201[34])'(?=w)", 'g'), '\$1&#8216;'); // eslint-disable-line no-useless-escape
     /**
      * Single closing quotes:
      * s {
@@ -481,8 +480,8 @@
      *                     # "<i>Custer</i>'s Last Stand."
      * } {$1&#8217;}xgi;
      */
-    str = str.replace(new RegExp("(" + close_class + ")'", 'g'), '\$1&#8217;');
-    str = str.replace(new RegExp("'(?=s|s\b)", 'g'), '\$1&#8217;');
+    str = str.replace(new RegExp("(" + close_class + ")'", 'g'), '\$1&#8217;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("'(?=s|s\b)", 'g'), '\$1&#8217;'); // eslint-disable-line no-useless-escape
     /**
      * Any remaining single quotes should be opening ones:
      */
@@ -502,7 +501,7 @@
      *     (?=\w)              # followed by a word character
      * } {$1&#8220;}xg;
      */
-    str = str.replace(new RegExp("(s|&nbsp;|--|&[mn]dash;|" + dec_dashes + "|&#x201[34])\"(?=w)", 'g'), '\$1&#8220;');
+    str = str.replace(new RegExp("(s|&nbsp;|--|&[mn]dash;|" + dec_dashes + "|&#x201[34])\"(?=w)", 'g'), '\$1&#8220;'); // eslint-disable-line no-useless-escape
     /**
      * Double closing quotes:
      * s {
@@ -512,8 +511,8 @@
      *                        # if not, then make sure the next char is whitespace.
      * } {$1&#8221;}xg;
      */
-    str = str.replace(new RegExp("(" + close_class + ")\"", 'g'), '\$1&#8221;');
-    str = str.replace(new RegExp("'(?=s)", 'g'), '\$1&#8221;');
+    str = str.replace(new RegExp("(" + close_class + ")\"", 'g'), '\$1&#8221;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("'(?=s)", 'g'), '\$1&#8221;'); // eslint-disable-line no-useless-escape
     /**
      * Any remaining quotes should be opening ones.
      */
@@ -630,7 +629,7 @@
     var do_backticks;
     var do_dashes;
     var do_ellipses;
-    var do_stupefy;
+    // var do_stupefy:number;
     if (typeof attr === 'number') {
       attr = attr.toString();
     }
@@ -661,10 +660,9 @@
       do_backticks = 1;
       do_dashes = 3;
       do_ellipses = 1;
-    }
-    else if (attr === '-1') {
-      // Special "stupefy" mode.
-      do_stupefy = 1;
+      // } else if (attr === '-1') {
+      //   // Special "stupefy" mode.
+      //   do_stupefy = 1;
     }
     else {
       for (var i = 0; i < attr.length; i++) {
@@ -768,7 +766,7 @@
     var tokens = [];
     var match = /<!--[\s\S]*?-->|<\?.*?\?>|<[^>]*>/g;
     var matched = null;
-    while (matched = match.exec(str)) {
+    while (matched = match.exec(str)) { // eslint-disable-line no-cond-assign
       if (pos < matched.index) {
         var t_1 = ['text', str.substring(pos, matched.index)];
         tokens.push(t_1);

@@ -1,9 +1,16 @@
 {
   "name": "smartypants",
   "version": "0.1.1",
+  "type": "module",
   "main": "smartypants",
   "module": "smartypants.es6.js",
   "jsnext:main": "smartypants.es6.js",
+  "exports": {
+    ".": {
+        "import": "smartypants.es6.js",
+        "require": "smartypants.js"
+    }
+  },
   "scripts": {
     "test": "node --experimental-modules test/index.mjs"
   },
