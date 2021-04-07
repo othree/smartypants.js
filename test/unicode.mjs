@@ -10,7 +10,7 @@ const EMD = '\u2014';
 const ELP = '\u2026';
 
 test('unicode', function (t) {
-  t.plan(6);
+  t.plan(7);
 
   t.equal(smartypantsu('6\'2" tall', '1'), `6${RSQ}2${RDQ} tall`);
   t.equal(smartypantsu("``backticks''", '1'), `${LDQ}backticks${RDQ}`);
@@ -18,6 +18,7 @@ test('unicode', function (t) {
   t.equal(smartypantsu('2018"', '1'), `2018${RDQ}`);
   t.equal(smartypantsu('hello ...', '1'), `hello ${ELP}`);
   t.equal(smartypantsu("<i>Custer</i>'s Last Stand.", '1'), `<i>Custer</i>${RSQ}s Last Stand.`);
+  t.equal(smartypantsu('<i>Custer</i>"s Last Stand.', '1'), `<i>Custer</i>${RDQ}s Last Stand.`);
 });
 
 test('stupefy unicode', function (t) {
