@@ -438,8 +438,8 @@
      * Special case if the very first character is a quote
      * followed by punctuation at a non-word-break. Close the quotes by brute force:
      */
-    str = str.replace(new RegExp("^'(?=" + punct_class + "B)"), '&#8217;'); // eslint-disable-line no-useless-escape
-    str = str.replace(new RegExp("^\"(?=" + punct_class + "B)"), '&#8221;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("^'(?=" + punct_class + "\\B)"), '&#8217;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("^\"(?=" + punct_class + "\\B)"), '&#8221;'); // eslint-disable-line no-useless-escape
     /**
      * Special case for double sets of quotes, e.g.:
      *   <p>He said, "'Quoted' words in a larger quote."</p>
@@ -450,7 +450,7 @@
      * Special case for decade abbreviations (the '80s):
      */
     str = str.replace(/'(?=\d\d)/, '&#8217;');
-    var close_class = '[^\ \t\r\n\[\{\(\-]'; // eslint-disable-line no-useless-escape
+    var close_class = '[^\\ \\t\\r\\n\\[\\{\\(\\-]'; // eslint-disable-line no-useless-escape
     var dec_dashes = '&#8211;|&#8212;';
     /**
      * Get most opening single quotes:
@@ -467,7 +467,7 @@
      *     (?=\w)              # followed by a word character
      * } {$1&#8216;}xg;
      */
-    str = str.replace(new RegExp("(s|&nbsp;|--|&[mn]dash;|" + dec_dashes + "|&#x201[34])'(?=w)", 'g'), '\$1&#8216;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("(\\s|&nbsp;|--|&[mn]dash;|" + dec_dashes + "|&#x201[34])'(?=\\w)", 'g'), '\$1&#8216;'); // eslint-disable-line no-useless-escape
     /**
      * Single closing quotes:
      * s {
@@ -481,7 +481,7 @@
      * } {$1&#8217;}xgi;
      */
     str = str.replace(new RegExp("(" + close_class + ")'", 'g'), '\$1&#8217;'); // eslint-disable-line no-useless-escape
-    str = str.replace(new RegExp("(?<!" + close_class + ")'(?=s|s\b)", 'g'), '&#8217;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("(?<!" + close_class + ")'(?=\\s|s\\b)", 'g'), '&#8217;'); // eslint-disable-line no-useless-escape
     /**
      * Any remaining single quotes should be opening ones:
      */
@@ -501,7 +501,7 @@
      *     (?=\w)              # followed by a word character
      * } {$1&#8220;}xg;
      */
-    str = str.replace(new RegExp("(s|&nbsp;|--|&[mn]dash;|" + dec_dashes + "|&#x201[34])\"(?=w)", 'g'), '\$1&#8220;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("(\\s|&nbsp;|--|&[mn]dash;|" + dec_dashes + "|&#x201[34])\"(?=\\w)", 'g'), '\$1&#8220;'); // eslint-disable-line no-useless-escape
     /**
      * Double closing quotes:
      * s {
@@ -512,7 +512,7 @@
      * } {$1&#8221;}xg;
      */
     str = str.replace(new RegExp("(" + close_class + ")\"", 'g'), '\$1&#8221;'); // eslint-disable-line no-useless-escape
-    str = str.replace(new RegExp("(?<!" + close_class + ")\"(?=s)", 'g'), '&#8221;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("(?<!" + close_class + ")\"(?=\\s)", 'g'), '&#8221;'); // eslint-disable-line no-useless-escape
     /**
      * Any remaining quotes should be opening ones.
      */
