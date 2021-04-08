@@ -7,8 +7,8 @@
   "jsnext:main": "smartypants.es6.js",
   "exports": {
     ".": {
-        "import": "smartypants.es6.js",
-        "require": "smartypants.js"
+        "import": "./smartypants.es6.js",
+        "require": "./smartypants.js"
     }
   },
   "scripts": {
