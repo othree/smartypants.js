@@ -451,6 +451,7 @@
      */
     str = str.replace(/'(?=\d\d)/, '&#8217;');
     var close_class = '[^\\ \\t\\r\\n\\[\\{\\(\\-]'; // eslint-disable-line no-useless-escape
+    var not_close_class = '[\\ \\t\\r\\n\\[\\{\\(\\-]'; // eslint-disable-line no-useless-escape
     var dec_dashes = '&#8211;|&#8212;';
     /**
      * Get most opening single quotes:
@@ -481,7 +482,7 @@
      * } {$1&#8217;}xgi;
      */
     str = str.replace(new RegExp("(" + close_class + ")'", 'g'), '\$1&#8217;'); // eslint-disable-line no-useless-escape
-    str = str.replace(new RegExp("(?<!" + close_class + ")'(?=\\s|s\\b)", 'g'), '&#8217;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("(" + not_close_class + "?)'(?=\\s|s\\b)", 'g'), '\$1&#8217;'); // eslint-disable-line no-useless-escape
     /**
      * Any remaining single quotes should be opening ones:
      */
@@ -512,7 +513,7 @@
      * } {$1&#8221;}xg;
      */
     str = str.replace(new RegExp("(" + close_class + ")\"", 'g'), '\$1&#8221;'); // eslint-disable-line no-useless-escape
-    str = str.replace(new RegExp("(?<!" + close_class + ")\"(?=\\s)", 'g'), '&#8221;'); // eslint-disable-line no-useless-escape
+    str = str.replace(new RegExp("(" + not_close_class + "?)\"(?=\\s)", 'g'), '\$1&#8221;'); // eslint-disable-line no-useless-escape
     /**
      * Any remaining quotes should be opening ones.
      */
