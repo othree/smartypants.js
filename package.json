@@ -1,13 +1,14 @@
 {
   "name": "smartypants",
   "version": "0.1.6",
-  "main": "smartypants",
-  "module": "smartypants.es6.js",
+  "type": "module",
+  "main": "smartypants.mjs",
+  "module": "smartypants.mjs",
   "jsnext:main": "smartypants.es6.js",
   "exports": {
     ".": {
-        "import": "./smartypants.es6.js",
-        "require": "./smartypants.js"
+      "import": "./smartypants.mjs",
+      "require": "./smartypants.js"
     }
   },
   "scripts": {
