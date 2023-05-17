@@ -4,11 +4,12 @@
   "type": "module",
   "main": "smartypants.mjs",
   "module": "smartypants.mjs",
+  "browser": "smartypants.es6.js",
   "jsnext:main": "smartypants.es6.js",
   "exports": {
     ".": {
       "import": "./smartypants.mjs",
-      "require": "./smartypants.js"
+      "require": "./smartypants.cjs"
     }
   },
   "scripts": {
