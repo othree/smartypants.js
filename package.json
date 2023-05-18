@@ -34,6 +34,7 @@
   "files": [
     "smartypants.js",
     "smartypants.mjs",
+    "smartypants.cjs",
     "smartypants.es6.js",
     "bin/smartypants.js",
     "bin/smartypantsu.js"
