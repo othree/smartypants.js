@@ -40,8 +40,8 @@
     "bin/smartypantsu.js"
   ],
   "bin": {
-    "smartypants": "./bin/smartypants.js",
-    "smartypantsu": "./bin/smartypantsu.js"
+    "smartypants": "./bin/smartypants.cjs",
+    "smartypantsu": "./bin/smartypantsu.cjs"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
